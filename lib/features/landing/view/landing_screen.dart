@@ -10,7 +10,7 @@ import '../sections/club_stories_section.dart';
 import '../widgets/carousel/tournament_poster_carousel.dart';
 import '../widgets/landing_quick_actions.dart';
 import '../widgets/landing_section_header.dart';
-import '../widgets/landing_upcoming_events.dart';
+import '../widgets/landing_upcoming_fixtures.dart';
 import '../widgets/skeletons/landing_skeleton.dart';
 import '../widgets/skeletons/tournament_carousel_skeleton.dart';
 
@@ -119,9 +119,9 @@ class _LandingScreenState extends State<LandingScreen> {
         const LandingQuickActions(),
 
         const SizedBox(height: 24),
-        const LandingSectionHeader(title: 'Upcoming'),
+        const LandingSectionHeader(title: 'Upcoming Fixtures'),
         const SizedBox(height: 12),
-        const LandingUpcomingEvents(),
+        const LandingUpcomingFixtures(),
         const SizedBox(height: 24),
 // ─── CLUB NEWS HEADER ───
         const LandingSectionHeader(title: 'Club News'),
