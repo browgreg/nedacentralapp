@@ -5,15 +5,14 @@ import '../model/honour_category.dart';
 import '../widgets/honours_content.dart';
 import '../widgets/honours_header.dart';
 
-class HonoursStatisticsScreen extends StatefulWidget {
-  const HonoursStatisticsScreen({super.key});
+class HonourBoardScreen extends StatefulWidget {
+  const HonourBoardScreen({super.key});
 
   @override
-  State<HonoursStatisticsScreen> createState() =>
-      _HonoursStatisticsScreenState();
+  State<HonourBoardScreen> createState() => _HonourBoardScreenState();
 }
 
-class _HonoursStatisticsScreenState extends State<HonoursStatisticsScreen> {
+class _HonourBoardScreenState extends State<HonourBoardScreen> {
   HonourCategory _selected = HonourCategory.presidents;
 
   @override
@@ -24,7 +23,7 @@ class _HonoursStatisticsScreenState extends State<HonoursStatisticsScreen> {
       backgroundColor: n.surfaceSubtle,
       appBar: AppBar(
         title: const Text('Honours & Statistics'),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.black.withAlpha(128),
         elevation: 0,
       ),
       body: Column(

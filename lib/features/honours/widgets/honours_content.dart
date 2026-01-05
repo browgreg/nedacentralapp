@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/neda_theme.dart';
-import '../../../core/widgets/woodgrain_background.dart';
+import '../../../core/widgets/honour_board_background.dart';
 import '../model/honour_category.dart';
 
 class HonoursContent extends StatelessWidget {
@@ -22,7 +22,7 @@ class HonoursContent extends StatelessWidget {
       /// ✅ Use a STABLE key (String / int), not the whole object
       child: Center(
         key: ValueKey(category.index), // 👈 IMPORTANT
-        child: WoodgrainBackground(
+        child: HonourBoardBackground(
           borderRadius: BorderRadius.circular(20),
           child: Padding(
             padding: const EdgeInsets.all(20),

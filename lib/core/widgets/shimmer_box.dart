@@ -5,7 +5,7 @@ class ShimmerBox extends StatefulWidget {
   final double? width;
   final Color? color;
 
-  const ShimmerBox({
+  const ShimmerBox({super.key, 
     this.height,
     this.width,
     this.color,

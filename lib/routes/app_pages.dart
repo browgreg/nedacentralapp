@@ -20,7 +20,7 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.honours,
-      page: () => const HonoursStatisticsScreen(),
+      page: () => const HonourBoardScreen(),
     ),
     GetPage(
       name: AppRoutes.results,

@@ -53,8 +53,6 @@ class _LandingScreenState extends State<LandingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final n = Theme.of(context).extension<NedaTheme>()!;
-
     return Scaffold(
       body: AnimatedContainer(
         duration: const Duration(milliseconds: 120),

@@ -44,9 +44,7 @@ class LandingQuickActions extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (_) => const HonoursStatisticsScreen(),
-                ),
+                MaterialPageRoute(builder: (_) => const HonourBoardScreen()),
               );
             },
           ),
