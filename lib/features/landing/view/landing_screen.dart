@@ -10,6 +10,7 @@ import '../sections/club_stories_section.dart';
 import '../widgets/carousel/tournament_poster_carousel.dart';
 import '../widgets/landing_quick_actions.dart';
 import '../widgets/landing_section_header.dart';
+import '../widgets/landing_stats_bridge.dart';
 import '../widgets/landing_upcoming_fixtures.dart';
 import '../widgets/skeletons/landing_skeleton.dart';
 import '../widgets/skeletons/tournament_carousel_skeleton.dart';
@@ -23,12 +24,32 @@ class LandingScreen extends StatefulWidget {
 
 class _LandingScreenState extends State<LandingScreen> {
   late final LandingController c;
+  final ScrollController _scrollController = ScrollController();
+
+  double _scrollProgress = 0.0;
 
   @override
   void initState() {
     super.initState();
     c = Get.find<LandingController>();
-    c.fetch(context); // ✅ correct lifecycle place
+    c.fetch(context);
+
+    _scrollController.addListener(_onScroll);
+  }
+
+  void _onScroll() {
+    final max = _scrollController.position.maxScrollExtent;
+    final offset = _scrollController.offset;
+
+    setState(() {
+      _scrollProgress = (offset / max).clamp(0.0, 1.0);
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -36,18 +57,40 @@ class _LandingScreenState extends State<LandingScreen> {
     final n = Theme.of(context).extension<NedaTheme>()!;
 
     return Scaffold(
-      backgroundColor: n.surfaceSubtle,
-      body: SafeArea(
-        child: Obx(() {
-          return RefreshIndicator(
+      body: AnimatedContainer(
+        duration: const Duration(milliseconds: 120),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.bottomCenter,
+            end: Alignment.topCenter,
+            stops: [
+              0.0,
+              0.4 + (_scrollProgress * 0.3),
+              1.0,
+            ],
+            colors: [
+              Colors.black,
+              Colors.black.withAlpha(225),
+              nedaTeal.withAlpha(249),
+            ],
+          ),
+        ),
+        child: SafeArea(
+          child: RefreshIndicator(
             edgeOffset: 80,
             onRefresh: () async {
               HapticFeedback.lightImpact();
               await c.reload(context);
             },
-            child: _buildScrollableBody(),
-          );
-        }),
+            child: Obx(
+              () => SingleChildScrollView(
+                controller: _scrollController,
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: _buildScrollableBody(),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -56,14 +99,11 @@ class _LandingScreenState extends State<LandingScreen> {
   // SINGLE SCROLL ROOT
   // ─────────────────────────
   Widget _buildScrollableBody() {
-    return SingleChildScrollView(
-      physics: const AlwaysScrollableScrollPhysics(),
-      child: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 350),
-        switchInCurve: Curves.easeOutCubic,
-        switchOutCurve: Curves.easeInCubic,
-        child: _buildBody(),
-      ),
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 350),
+      switchInCurve: Curves.easeOutCubic,
+      switchOutCurve: Curves.easeInCubic,
+      child: _buildBody(),
     );
   }
 
@@ -73,13 +113,14 @@ class _LandingScreenState extends State<LandingScreen> {
   Widget _buildBody() {
     // ─── LOADING ───
     if (c.isLoading.value) {
-      return const Column(
-        key: ValueKey('loading'),
+      return Column(
+        key: const ValueKey('loading'),
         children: [
-          SizedBox(height: 16),
-          TournamentCarouselSkeleton(),
-          SizedBox(height: 24),
-          LandingSkeleton(),
+          const SizedBox(height: 16),
+          const TournamentCarouselSkeleton(),
+          const SizedBox(height: 24),
+          const LandingSkeleton(),
+          const SizedBox(height: 24),
         ],
       );
     }
@@ -125,7 +166,9 @@ class _LandingScreenState extends State<LandingScreen> {
         const SizedBox(height: 24),
 // ─── CLUB NEWS HEADER ───
         const LandingSectionHeader(title: 'Club News'),
-        const SizedBox(height: 12),
+
+        const SizedBox(height: 24),
+        LandingStatsBridge(),
         // ─── CLUB STORIES ───
         if (c.clubStories.isNotEmpty)
           ClubStoriesSection(
