@@ -67,7 +67,7 @@ class _LandingScreenState extends State<LandingScreen> {
             ],
             colors: [
               Colors.black,
-              Colors.black.withAlpha(225),
+              Colors.black.withAlpha(200),
               nedaTeal.withAlpha(249),
             ],
           ),
