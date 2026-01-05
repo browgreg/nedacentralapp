@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../core/theme/neda_theme.dart';
 
-class HonoursStatisticsScreen extends StatelessWidget {
-  const HonoursStatisticsScreen({super.key});
+class ResultsScreen extends StatelessWidget {
+  const ResultsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,9 @@ class HonoursStatisticsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            /// ─── PAGE INTRO ───
+            /// ─────────────────────────
+            /// PAGE INTRO
+            /// ─────────────────────────
             Text(
               'League Records & Achievements',
               style: NedaText.heading(context),
@@ -32,14 +34,18 @@ class HonoursStatisticsScreen extends StatelessWidget {
               style: NedaText.muted(context),
             ),
 
-            const SizedBox(height: 24),
+            const SizedBox(height: 28),
 
-            /// ─── KEY STATS ───
+            /// ─────────────────────────
+            /// KEY STATS
+            /// ─────────────────────────
             _StatsGrid(),
 
-            const SizedBox(height: 32),
+            const SizedBox(height: 36),
 
-            /// ─── HONOURS ───
+            /// ─────────────────────────
+            /// HONOURS BOARD
+            /// ─────────────────────────
             Text(
               'Honours Board',
               style: NedaText.headingSmall(context),
@@ -68,12 +74,16 @@ class HonoursStatisticsScreen extends StatelessWidget {
               ],
             ),
 
-            const SizedBox(height: 32),
+            const SizedBox(height: 36),
 
-            /// ─── PLACEHOLDER FOR FUTURE ───
-            Text(
-              'More results coming soon',
-              style: NedaText.muted(context),
+            /// ─────────────────────────
+            /// FUTURE PLACEHOLDER
+            /// ─────────────────────────
+            Center(
+              child: Text(
+                'More statistics and results coming soon',
+                style: NedaText.muted(context),
+              ),
             ),
           ],
         ),
@@ -82,11 +92,21 @@ class HonoursStatisticsScreen extends StatelessWidget {
   }
 }
 
+/// ─────────────────────────
+/// STATS GRID
+/// ─────────────────────────
 class _StatsGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final columns = width >= 1000
+        ? 4
+        : width >= 600
+            ? 3
+            : 2;
+
     return GridView.count(
-      crossAxisCount: MediaQuery.of(context).size.width >= 700 ? 4 : 2,
+      crossAxisCount: columns,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       mainAxisSpacing: 12,
@@ -102,11 +122,17 @@ class _StatsGrid extends StatelessWidget {
   }
 }
 
+/// ─────────────────────────
+/// STAT TILE
+/// ─────────────────────────
 class _StatTile extends StatelessWidget {
   final String label;
   final String value;
 
-  const _StatTile({required this.label, required this.value});
+  const _StatTile({
+    required this.label,
+    required this.value,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +149,7 @@ class _StatTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(value, style: NedaText.heading(context)),
-          const SizedBox(height: 4),
+          const SizedBox(height: 6),
           Text(label, style: NedaText.muted(context)),
         ],
       ),
@@ -131,6 +157,9 @@ class _StatTile extends StatelessWidget {
   }
 }
 
+/// ─────────────────────────
+/// HONOURS CARD
+/// ─────────────────────────
 class _HonoursCard extends StatelessWidget {
   final String title;
   final String subtitle;
@@ -159,7 +188,7 @@ class _HonoursCard extends StatelessWidget {
           Text(title, style: NedaText.headingSmall(context)),
           const SizedBox(height: 4),
           Text(subtitle, style: NedaText.muted(context)),
-          const SizedBox(height: 12),
+          const SizedBox(height: 14),
           ...items.map(
             (i) => Padding(
               padding: const EdgeInsets.symmetric(vertical: 6),
@@ -186,6 +215,9 @@ class _HonoursCard extends StatelessWidget {
   }
 }
 
+/// ─────────────────────────
+/// HONOUR ITEM MODEL
+/// ─────────────────────────
 class _HonourItem {
   final String left;
   final String right;

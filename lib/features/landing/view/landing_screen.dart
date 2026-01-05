@@ -10,7 +10,6 @@ import '../sections/club_stories_section.dart';
 import '../widgets/carousel/tournament_poster_carousel.dart';
 import '../widgets/landing_quick_actions.dart';
 import '../widgets/landing_section_header.dart';
-import '../widgets/landing_stats_bridge.dart';
 import '../widgets/landing_upcoming_fixtures.dart';
 import '../widgets/skeletons/landing_skeleton.dart';
 import '../widgets/skeletons/tournament_carousel_skeleton.dart';
@@ -167,8 +166,7 @@ class _LandingScreenState extends State<LandingScreen> {
 // ─── CLUB NEWS HEADER ───
         const LandingSectionHeader(title: 'Club News'),
 
-        const SizedBox(height: 24),
-        LandingStatsBridge(),
+        const SizedBox(height: 12),
         // ─── CLUB STORIES ───
         if (c.clubStories.isNotEmpty)
           ClubStoriesSection(

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:neda_central/features/results/view/full_results_screen.dart';
 
 import '../../../core/theme/neda_theme.dart';
+import '../../fixtures/view/fixtures_screen.dart';
+import '../../honours/view/honours_statistics_screen.dart';
 
 class LandingQuickActions extends StatelessWidget {
   const LandingQuickActions({super.key});
@@ -14,17 +17,38 @@ class LandingQuickActions extends StatelessWidget {
           _ActionCard(
             icon: Icons.event_outlined,
             label: 'Fixtures',
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const FullFixturesScreen(),
+                ),
+              );
+            },
+          ),
+          _ActionCard(
+            icon: Icons.tv,
+            label: 'Results',
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const ResultsScreen(),
+                ),
+              );
+            },
           ),
           _ActionCard(
             icon: Icons.emoji_events_outlined,
-            label: 'Register',
-            onTap: () {},
-          ),
-          _ActionCard(
-            icon: Icons.place_outlined,
-            label: 'Venues',
-            onTap: () {},
+            label: 'Honours',
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const HonoursStatisticsScreen(),
+                ),
+              );
+            },
           ),
         ],
       ),

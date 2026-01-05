@@ -1,7 +1,7 @@
 class AppConfig {
   /// Global dev toggle
   /// 🔧 Toggle this to switch environments
-  static const bool isDevMode = true;
+  static const bool isDevMode = false;
 
   /// 🚧 Dev-only features
   static const bool showHonoursAsHome = true;
