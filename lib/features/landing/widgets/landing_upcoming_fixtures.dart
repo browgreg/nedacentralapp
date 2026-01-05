@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:neda_central/features/landing/widgets/skeletons/landing_skeleton.dart';
 
 import '../../../core/theme/neda_theme.dart';
 import '../../../core/widgets/empty_state_card.dart';
 import '../../../services/api/fixtures_api.dart';
 import '../model/fixture_model.dart';
 import 'fixture_detail_sheet.dart';
+import 'skeletons/landing_skeleton.dart';
 
 class LandingUpcomingFixtures extends StatelessWidget {
   const LandingUpcomingFixtures({super.key});
@@ -58,12 +58,14 @@ class _DivisionFixturesCard extends StatelessWidget {
     required this.fixtures,
   });
 
+  static const double _stripHeight = 140; // 👈 KEY FIX
+
   @override
   Widget build(BuildContext context) {
     final n = Theme.of(context).extension<NedaTheme>()!;
 
     return Container(
-      margin: const EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(bottom: 20),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: n.surfaceCard,
@@ -72,8 +74,9 @@ class _DivisionFixturesCard extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min, // 👈 important
         children: [
-          /// DIVISION HEADER
+          /// HEADER
           Row(
             children: [
               Expanded(
@@ -82,158 +85,115 @@ class _DivisionFixturesCard extends StatelessWidget {
                   style: NedaText.headingSmall(context),
                 ),
               ),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                decoration: BoxDecoration(
-                  color: n.surfaceSubtle,
-                  borderRadius: BorderRadius.circular(999),
-                  border: Border.all(color: n.borderPrimary.withAlpha(90)),
-                ),
-                child: Text(
-                  '${fixtures.length} matches',
-                  style: NedaText.muted(context),
-                ),
+              Text(
+                '${fixtures.length} matches',
+                style: NedaText.muted(context),
               ),
             ],
           ),
+
           const SizedBox(height: 12),
 
-          /// FIXTURES
-          ...List.generate(fixtures.length, (i) {
-            final f = fixtures[i];
-            return Padding(
-              padding:
-                  EdgeInsets.only(bottom: i == fixtures.length - 1 ? 0 : 10),
-              child: _FixtureCard(fixture: f),
-            );
-          }),
+          /// HORIZONTAL FIXTURES STRIP
+          SizedBox(
+            height: _stripHeight, // 👈 THIS removes overflow
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.only(right: 4),
+              itemCount: fixtures.length,
+              separatorBuilder: (_, __) => const SizedBox(width: 12),
+              itemBuilder: (_, i) {
+                return SizedBox(
+                  width: 250, // card width
+                  child: _FixtureTile(fixture: fixtures[i]),
+                );
+              },
+            ),
+          ),
         ],
       ),
     );
   }
 }
 
-class _FixtureCard extends StatelessWidget {
+class _FixtureTile extends StatelessWidget {
   final Fixture fixture;
 
-  const _FixtureCard({
-    required this.fixture,
-  });
+  const _FixtureTile({required this.fixture});
 
   @override
   Widget build(BuildContext context) {
     final n = Theme.of(context).extension<NedaTheme>()!;
 
-    return Material(
-      color: Colors.transparent,
-      borderRadius: BorderRadius.circular(16),
-      child: InkWell(
+    return SizedBox(
+      width: 280,
+      child: Material(
+        color: Colors.transparent,
         borderRadius: BorderRadius.circular(16),
-        onTap: () => showFixtureDetailSheet(context, fixture),
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-          decoration: BoxDecoration(
-            color: n.surfaceSubtle,
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: n.borderPrimary.withAlpha(90)),
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              /// LEFT ACCENT
-              Container(
-                width: 4,
-                height: 52,
-                decoration: BoxDecoration(
-                  color: n.accentPrimary,
-                  borderRadius: BorderRadius.circular(2),
-                  boxShadow: [
-                    BoxShadow(
-                      color: n.accentPrimary.withAlpha(90),
-                      blurRadius: 10,
-                    ),
-                  ],
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
+          onTap: () => showFixtureDetailSheet(context, fixture),
+          child: Container(
+            padding: const EdgeInsets.all(14),
+            decoration: BoxDecoration(
+              color: n.surfaceSubtle,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: n.borderPrimary.withAlpha(90)),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min, // ✅ KEY FIX
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                /// HOME
+                Text(
+                  fixture.homeTeam,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: NedaText.body(context).copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
-              ),
-              const SizedBox(width: 12),
 
-              /// MAIN
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                /// AWAY
+                Text(
+                  'vs ${fixture.awayTeam}',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: NedaText.muted(context),
+                ),
+
+                const SizedBox(height: 8),
+
+                /// DATE
+                Text(
+                  DateFormat('EEE d MMM').format(fixture.date),
+                  style: NedaText.muted(context),
+                ),
+
+                const SizedBox(height: 6),
+
+                /// VENUE
+                Row(
                   children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            '${fixture.homeTeam} vs ${fixture.awayTeam}',
-                            style: NedaText.body(context).copyWith(
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        _DatePill(date: fixture.date),
-                      ],
+                    Icon(
+                      Icons.place_outlined,
+                      size: 14,
+                      color: n.textMuted,
                     ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.place_outlined,
-                          size: 16,
-                          color: n.textMuted,
-                        ),
-                        const SizedBox(width: 6),
-                        Expanded(
-                          child: Text(
-                            fixture.venueName,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: NedaText.muted(context),
-                          ),
-                        ),
-                      ],
+                    const SizedBox(width: 4),
+                    Expanded(
+                      child: Text(
+                        fixture.venueName,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: NedaText.muted(context),
+                      ),
                     ),
                   ],
                 ),
-              ),
-
-              const SizedBox(width: 8),
-              Icon(
-                Icons.chevron_right,
-                color: n.textMuted,
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _DatePill extends StatelessWidget {
-  final DateTime date;
-
-  const _DatePill({required this.date});
-
-  @override
-  Widget build(BuildContext context) {
-    final n = Theme.of(context).extension<NedaTheme>()!;
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      decoration: BoxDecoration(
-        color: n.surfaceCard,
-        borderRadius: BorderRadius.circular(999),
-        border: Border.all(color: n.borderPrimary.withAlpha(90)),
-      ),
-      child: Text(
-        DateFormat('EEE d MMM').format(date),
-        style: NedaText.muted(context).copyWith(
-          fontWeight: FontWeight.w600,
         ),
       ),
     );
