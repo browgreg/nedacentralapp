@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../core/config/layout.dart';
 import '../../../core/theme/neda_theme.dart';
 import '../model/poster.dart';
@@ -64,31 +65,31 @@ class _ClubStoriesSectionState extends State<ClubStoriesSection> {
 
                 return isWide
                     ? Row(
-                  children: [
-                    _TabsRail(
-                      stories: stories,
-                      selectedIndex: _selectedIndex,
-                      onSelect: (i) => setState(() => _selectedIndex = i),
-                    ),
-                    const VerticalDivider(width: 1),
-                    Expanded(
-                      child: _StoryContent(poster: poster),
-                    ),
-                  ],
-                )
+                        children: [
+                          _TabsRail(
+                            stories: stories,
+                            selectedIndex: _selectedIndex,
+                            onSelect: (i) => setState(() => _selectedIndex = i),
+                          ),
+                          const VerticalDivider(width: 1),
+                          Expanded(
+                            child: _StoryContent(poster: poster),
+                          ),
+                        ],
+                      )
                     : Column(
-                  children: [
-                    _TabsTop(
-                      stories: stories,
-                      selectedIndex: _selectedIndex,
-                      onSelect: (i) => setState(() => _selectedIndex = i),
-                    ),
-                    const Divider(height: 1),
-                    Expanded(
-                      child: _StoryContent(poster: poster),
-                    ),
-                  ],
-                );
+                        children: [
+                          _TabsTop(
+                            stories: stories,
+                            selectedIndex: _selectedIndex,
+                            onSelect: (i) => setState(() => _selectedIndex = i),
+                          ),
+                          const Divider(height: 1),
+                          Expanded(
+                            child: _StoryContent(poster: poster),
+                          ),
+                        ],
+                      );
               },
             ),
           ),
@@ -131,7 +132,8 @@ class _TabsRail extends StatelessWidget {
               onTap: () => onSelect(i),
               borderRadius: BorderRadius.circular(12),
               child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
                 decoration: BoxDecoration(
                   color: isActive
                       ? Theme.of(context).colorScheme.primary.withAlpha(28)
@@ -202,9 +204,9 @@ class _TabsTop extends StatelessWidget {
                   color: isActive
                       ? Theme.of(context).colorScheme.primary.withAlpha(80)
                       : Theme.of(context)
-                      .extension<NedaTheme>()!
-                      .borderPrimary
-                      .withAlpha(80),
+                          .extension<NedaTheme>()!
+                          .borderPrimary
+                          .withAlpha(80),
                 ),
               ),
               child: Align(
@@ -243,24 +245,44 @@ class _StoryContent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Image (kept reasonable height to avoid overflow)
-          ClipRRect(
-            borderRadius: BorderRadius.circular(16),
-            child: AspectRatio(
-              aspectRatio: 16 / 9,
-              child: GestureDetector( onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => PosterDetailScreen(poster: poster),
-                  ),
-                );
-              },
-                child: Image.network(
-                  'https://neda.club/BackEnd/posters/${poster.imageName}',
-                  fit: BoxFit.cover,
-                  errorBuilder: (_, __, ___) => Container(color: n.surfaceSubtle),
+          // ─── FULL IMAGE HERO (DESIGN MODE) ───
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => PosterDetailScreen(poster: poster),
                 ),
+              );
+            },
+            child: SizedBox(
+              width: double.infinity,
+              height: 200,
+              child: Stack(
+                alignment: AlignmentGeometry.center,
+                children: [
+                  Image.network(
+                    height: 250,
+                    'https://neda.club/BackEnd/posters/${poster.imageName}',
+                    errorBuilder: (_, __, ___) =>
+                        Container(color: n.surfaceSubtle),
+                  ),
+
+                  // Readability gradient overlay
+                  const DecoratedBox(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.transparent,
+                          Colors.black38,
+                          Colors.black87,
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

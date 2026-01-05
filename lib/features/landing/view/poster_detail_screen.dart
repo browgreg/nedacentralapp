@@ -141,12 +141,15 @@ class _PosterDetailScreenState extends State<PosterDetailScreen>
   // ─────────────────────────
   Widget _buildContent(BuildContext context, NedaTheme n) {
     return Scaffold(
-      backgroundColor: n.surfaceSubtle,
+      backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: n.surfaceCard,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.close),
+          icon: const Icon(
+            Icons.close,
+            color: Colors.white,
+          ),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(widget.poster.title),
@@ -167,7 +170,7 @@ class _PosterDetailScreenState extends State<PosterDetailScreen>
                   child: FadeInNetworkImage(
                     imageUrl:
                         '${ApiConfig.posterBaseUrl}/${widget.poster.imageName}',
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fitHeight,
                   ),
                 ),
               ),

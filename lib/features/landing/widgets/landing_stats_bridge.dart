@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/neda_theme.dart';
+import '../../honours/view/honours_statistics_screen.dart';
 
 class LandingStatsBridge extends StatelessWidget {
   const LandingStatsBridge({super.key});
@@ -15,7 +16,12 @@ class LandingStatsBridge extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(22),
         onTap: () {
-          // TODO: Navigate to honours / stats hub
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const HonoursStatisticsScreen(),
+            ),
+          );
         },
         child: Container(
           height: isWide ? 140 : 120,
