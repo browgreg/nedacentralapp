@@ -16,8 +16,14 @@ class PresidentsList extends StatelessWidget {
         return const Center(child: Text('No presidents recorded'));
       }
 
-      return ListView.builder(
+      return GridView.builder(
         padding: const EdgeInsets.all(16),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2, // ✅ 2 per row
+          mainAxisSpacing: 16,
+          crossAxisSpacing: 16,
+          childAspectRatio: 2.8, // 👈 plaque shape (wide & elegant)
+        ),
         itemCount: controller.presidents.length,
         itemBuilder: (_, i) {
           final p = controller.presidents[i];
