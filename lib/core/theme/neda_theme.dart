@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
 /// ───────────────────────────
 /// NEDA THEME EXTENSION
 /// ───────────────────────────
@@ -136,35 +135,40 @@ class NedaSurface {
     final n = Theme.of(context).extension<NedaTheme>()!;
 
     return BoxDecoration(
-      color: n.surfaceCard,
-      borderRadius: BorderRadius.circular(16),
-      border: Border.all(
-        color: n.borderPrimary.withAlpha(120),
-      ),
-      boxShadow: [ BoxShadow(color: Colors.white, offset: Offset(4, 4), blurRadius: 5),
-        BoxShadow(color: Colors.white, offset: Offset(3.5, 3.5), blurRadius: 4),
-        BoxShadow(color: Colors.white, offset: Offset(3, 3), blurRadius: 3),
-        BoxShadow(color: Colors.white, offset: Offset(2.5, 2.5), blurRadius: 2),
-        BoxShadow(color: Colors.white, offset: Offset(2, 2), blurRadius: 1),
-        BoxShadow(color: Colors.white, offset: Offset(1.5, 1.5), blurRadius: 0),
-        BoxShadow(color: Colors.white, offset: Offset(1, 1), blurRadius: 0),
-        BoxShadow(color: Colors.white, offset: Offset(.5, .5), blurRadius: 0),] // ✅ THIS is the key
-    );
+        color: n.surfaceCard,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: n.borderPrimary.withAlpha(120),
+        ),
+        boxShadow: [
+          BoxShadow(color: Colors.white, offset: Offset(4, 4), blurRadius: 5),
+          BoxShadow(
+              color: Colors.white, offset: Offset(3.5, 3.5), blurRadius: 4),
+          BoxShadow(color: Colors.white, offset: Offset(3, 3), blurRadius: 3),
+          BoxShadow(
+              color: Colors.white, offset: Offset(2.5, 2.5), blurRadius: 2),
+          BoxShadow(color: Colors.white, offset: Offset(2, 2), blurRadius: 1),
+          BoxShadow(
+              color: Colors.white, offset: Offset(1.5, 1.5), blurRadius: 0),
+          BoxShadow(color: Colors.white, offset: Offset(1, 1), blurRadius: 0),
+          BoxShadow(color: Colors.white, offset: Offset(.5, .5), blurRadius: 0),
+        ] // ✅ THIS is the key
+        );
   }
+
   static BoxDecoration subtle(BuildContext context) {
     final n = Theme.of(context).extension<NedaTheme>()!;
     return BoxDecoration(
-      color: n.surfaceSubtle,
-      borderRadius: BorderRadius.circular(12),
-   boxShadow: [
-        BoxShadow(
-          color: Color(0x22FFFFFF),
-          blurRadius: 18,
-          spreadRadius: -8,
-          offset: Offset(0, 12),
-        ),
-      ]
-    );
+        color: n.surfaceSubtle,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Color(0x22FFFFFF),
+            blurRadius: 18,
+            spreadRadius: -8,
+            offset: Offset(0, 12),
+          ),
+        ]);
   }
 }
 
@@ -322,6 +326,25 @@ List<BoxShadow> boxShadowWhite() {
   ];
 }
 
+List<BoxShadow> boxShadowBrass() {
+  return [
+    BoxShadow(color: brassDark, offset: Offset(7, 7), blurRadius: 0),
+    BoxShadow(color: brassDark, offset: Offset(6.5, 6.5), blurRadius: 0),
+    BoxShadow(color: brassDark, offset: Offset(6, 6), blurRadius: 0),
+    BoxShadow(color: brassBase, offset: Offset(5.5, 5.5), blurRadius: 0),
+    BoxShadow(color: brassBase, offset: Offset(5, 5), blurRadius: 0),
+    BoxShadow(color: brassBase, offset: Offset(4.5, 4.5), blurRadius: 0),
+    BoxShadow(color: brassBase, offset: Offset(4, 4), blurRadius: 0),
+    BoxShadow(color: brassBase, offset: Offset(3.5, 3.5), blurRadius: 0),
+    BoxShadow(color: brassBase, offset: Offset(3, 3), blurRadius: 0),
+    BoxShadow(color: brassBase, offset: Offset(2.5, 2.5), blurRadius: 0),
+    BoxShadow(color: brassBase, offset: Offset(2, 2), blurRadius: 0),
+    BoxShadow(color: brassBase, offset: Offset(1.5, 1.5), blurRadius: 0),
+    BoxShadow(color: brassBase, offset: Offset(1, 1), blurRadius: 0),
+    BoxShadow(color: brassBase, offset: Offset(.5, .5), blurRadius: 0),
+  ];
+}
+
 Color nedaYellow = const Color(0xfffffb16);
 Color nedaDarkGreen = const Color(0xff006636);
 Color nedaTeal = const Color(0xff83D0EA);
@@ -344,5 +367,21 @@ Color nedaGameCard = const Color(0xff112921);
 Color nedaGameCardDark = const Color(0xff0d2019);
 Color nedaGoldWriting = const Color(0xfff9ab20);
 Color nedaPersonalAccount = const Color(0xff0574E5);
+const brassBase = Color(0xFFB08D57);
+const brassLight = Color(0xFFD6B98C);
+const brassDark = Color(0xFF7A5A2E);
 
-
+BoxDecoration brassTileBoxDecoration() {
+  return BoxDecoration(
+      borderRadius: BorderRadius.circular(14),
+      gradient: const LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [
+          Color(0xFFD6B98C), // highlight
+          Color(0xFFB08D57), // brass base
+          Color(0xFF7A5A2E), // shadow
+        ],
+      ),
+      boxShadow: boxShadowBrass());
+}

@@ -1,7 +1,7 @@
 class HonourEntry {
-  final String primary; // Name / Team
-  final String secondary; // Role / Description
-  final String? period; // Year or term
+  final String primary;
+  final String secondary;
+  final String? period;
 
   const HonourEntry({
     required this.primary,

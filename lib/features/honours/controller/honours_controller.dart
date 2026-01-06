@@ -1,59 +1,58 @@
-import 'package:get/get.dart';
+import 'dart:convert';
 
-import '../../../services/api/presidents_api.dart';
+import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+
 import '../model/honour_category.dart';
 import '../model/honour_entry.dart';
 
 class HonoursController extends GetxController {
   final selectedCategory = HonourCategory.presidents.obs;
-  final isLoading = false.obs;
 
-  final Map<HonourCategory, List<HonourEntry>> data = {
-    HonourCategory.presidents: [],
-    HonourCategory.lifeMembers: [],
-    HonourCategory.inMemoriam: [],
-    HonourCategory.teamChampions: [],
-    HonourCategory.singlesChampions: [],
-    HonourCategory.doublesChampions: [],
-    HonourCategory.hundreds180s: [],
-    HonourCategory.fifties180s: [],
-    HonourCategory.twenties171s: [],
-    HonourCategory.club170: [],
+  final data = <HonourCategory, RxList<HonourEntry>>{
+    HonourCategory.presidents: <HonourEntry>[].obs,
+    HonourCategory.lifeMembers: <HonourEntry>[].obs,
+    HonourCategory.inMemoriam: <HonourEntry>[].obs,
+    HonourCategory.teamChampions: <HonourEntry>[].obs,
+    HonourCategory.singlesChampions: <HonourEntry>[].obs,
+    HonourCategory.doublesChampions: <HonourEntry>[].obs,
+    HonourCategory.hundreds180s: <HonourEntry>[].obs,
+    HonourCategory.fifties180s: <HonourEntry>[].obs,
+    HonourCategory.twenties171s: <HonourEntry>[].obs,
+    HonourCategory.club170: <HonourEntry>[].obs,
   };
-
-  List<HonourEntry> get entries => data[selectedCategory.value] ?? [];
 
   @override
   void onInit() {
     super.onInit();
-    loadPresidents();
+    fetchPresidents();
   }
 
-  Future<void> loadPresidents() async {
-    try {
-      isLoading.value = true;
+  List<HonourEntry> get entries =>
+      data[selectedCategory.value] ?? <HonourEntry>[];
 
-      final res = await PresidentsApi.fetchPresidents();
+  Future<void> fetchPresidents() async {
+    final res = await http.get(
+      Uri.parse('https://neda.club/BackEnd/services/api/presidents.php'),
+    );
 
-      final mapped = res.map<HonourEntry>((p) {
-        final start = p['startYear'] as int;
-        final end = p['endYear'] as int;
+    if (res.statusCode != 200) return;
 
-        return HonourEntry(
-          primary: p['name'],
-          secondary: 'Club President',
-          period: end == 0 ? '$start – Present' : '$start – $end',
-        );
-      }).toList();
+    final List decoded = json.decode(res.body);
 
-      data[HonourCategory.presidents]!.assignAll(mapped);
+    final mapped = decoded.map((e) {
+      final int start = e['startYear'];
+      final int end = e['endYear'];
 
-      print('🟢 Presidents loaded: ${mapped.length}');
-    } catch (e, s) {
-      print('❌ loadPresidents error: $e');
-      print(s);
-    } finally {
-      isLoading.value = false;
-    }
+      return HonourEntry(
+        primary: e['name'],
+        secondary: 'Club President',
+        period: end == 0 ? '$start – Present' : '$start – $end',
+      );
+    }).toList();
+
+    data[HonourCategory.presidents]!.assignAll(mapped);
+
+    print('🟢 Presidents loaded: ${mapped.length}');
   }
 }

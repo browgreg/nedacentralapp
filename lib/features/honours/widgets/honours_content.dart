@@ -1,59 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-import '../../../core/theme/neda_theme.dart';
-import '../model/honour_entry.dart';
+import '../controller/honours_controller.dart';
+import '../model/honour_category.dart';
+import 'brass_plaque_tile.dart';
 
 class HonoursContent extends StatelessWidget {
-  final List<HonourEntry> entries;
+  final HonourCategory category;
 
-  const HonoursContent({
-    super.key,
-    required this.entries,
-  });
+  const HonoursContent({super.key, required this.category});
 
   @override
   Widget build(BuildContext context) {
-    final n = Theme.of(context).extension<NedaTheme>()!;
+    final controller = Get.find<HonoursController>();
 
-    if (entries.isEmpty) {
-      return Center(
-        child: Text(
-          'No records yet',
-          style: NedaText.muted(context),
-        ),
-      );
-    }
+    return Obx(() {
+      final entries = controller.data[category]!;
 
-    return ListView.builder(
-      padding: const EdgeInsets.all(16),
-      itemCount: entries.length,
-      itemBuilder: (_, i) {
-        final e = entries[i];
-
-        return Container(
-          margin: const EdgeInsets.only(bottom: 12),
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: n.surfaceCard,
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Row(
-            children: [
-              Expanded(
-                child: Text(
-                  e.primary,
-                  style: NedaText.body(context)
-                      .copyWith(fontWeight: FontWeight.w600),
-                ),
-              ),
-              Text(
-                e.period ?? '',
-                style: NedaText.muted(context),
-              ),
-            ],
-          ),
+      if (entries.isEmpty) {
+        return Center(
+          child: Text('No ${category.title} records yet'),
         );
-      },
-    );
+      }
+
+      return ListView.separated(
+        padding: const EdgeInsets.all(20),
+        itemCount: entries.length,
+        separatorBuilder: (_, __) => const SizedBox(height: 14),
+        itemBuilder: (_, i) {
+          return BrassPlaqueTile(entry: entries[i]);
+        },
+      );
+    });
   }
 }

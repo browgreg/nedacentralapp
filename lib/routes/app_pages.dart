@@ -23,7 +23,7 @@ class AppPages {
       name: AppRoutes.honours,
       page: () => const HonoursScreen(),
       binding: BindingsBuilder(() {
-        Get.put(HonoursController());
+        Get.lazyPut<HonoursController>(() => HonoursController());
       }),
     ),
     GetPage(
