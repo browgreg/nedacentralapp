@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../widgets/brass_plaque_tile.dart';
+import '../widgets/brass_individual_plaque_tile.dart';
 import 'club_one_seventy_controller.dart';
 
 class ClubOneSeventyList extends StatelessWidget {
@@ -28,7 +28,7 @@ class ClubOneSeventyList extends StatelessWidget {
 
           return Padding(
             padding: const EdgeInsets.only(bottom: 12),
-            child: BrassPlaqueTile(
+            child: BrassIndividualPlaqueTile(
               primary: e.name,
               secondary: e.count > 1
                   ? '${e.count} × 170 finishes\n${e.years}'

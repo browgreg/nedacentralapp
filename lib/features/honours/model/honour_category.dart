@@ -42,12 +42,13 @@ extension HonourCategoryX on HonourCategory {
         return 'Singles Champions';
       case HonourCategory.doublesChampions:
         return 'Doubles Champions';
-      case HonourCategory.hundreds180s:
-        return '180s';
+
       case HonourCategory.fifties180s:
-        return '150+';
+        return '50+ 180';
+      case HonourCategory.hundreds180s:
+        return '100+ 180s';
       case HonourCategory.twenties171s:
-        return '171s';
+        return '10+ 171';
       case HonourCategory.club170:
         return 'Club 170';
     }

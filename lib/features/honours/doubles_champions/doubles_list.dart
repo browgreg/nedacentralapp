@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:neda_central/features/honours/widgets/brass_champions_plaque_tile.dart';
 
-import '../widgets/brass_plaque_tile.dart';
 import 'doubles_controller.dart';
 
 class DoublesChampionsList extends StatelessWidget {
@@ -26,8 +26,8 @@ class DoublesChampionsList extends StatelessWidget {
 
           return Padding(
             padding: const EdgeInsets.only(bottom: 14),
-            child: BrassPlaqueTile(
-              primary: '${e.year} • Division ${e.division}',
+            child: BrassChampionsPlaqueTile(
+              primary: '${e.year}\nDivision ${e.division}',
               secondary: '🏆 ${e.championA} & ${e.championB}\n'
                   '🥈 ${e.runnerUpA} & ${e.runnerUpB}',
             ),

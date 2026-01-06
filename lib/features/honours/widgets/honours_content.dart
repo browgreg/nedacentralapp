@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../club_one_seventy/one_seventy_one_list.dart';
+import '../club_one_seventy/club_one_seventy_list.dart';
 import '../doubles_champions/doubles_list.dart';
 import '../fifty_one_eighties/fifty_one_eight_list.dart';
 import '../life_members/life_members_list.dart';
@@ -46,10 +46,6 @@ class HonoursContent extends StatelessWidget {
         return const TwentyOneSeventyOnesList();
       case HonourCategory.club170:
         return const ClubOneSeventyList();
-      default:
-        return const Center(
-          child: Text('Section coming soon'),
-        );
     }
   }
 }

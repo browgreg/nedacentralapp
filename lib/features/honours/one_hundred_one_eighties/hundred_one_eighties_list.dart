@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../widgets/brass_plaque_tile.dart';
+import '../widgets/brass_individual_plaque_tile.dart';
 import 'hundred_one_eight_controller.dart';
 
 class HundredOneEightiesList extends StatelessWidget {
@@ -26,9 +26,9 @@ class HundredOneEightiesList extends StatelessWidget {
 
           return Padding(
             padding: const EdgeInsets.only(bottom: 12),
-            child: BrassPlaqueTile(
+            child: BrassIndividualPlaqueTile(
               primary: e.name,
-              secondary: '${e.career180} career 180s',
+              secondary: '${e.career180}',
             ),
           );
         },

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../widgets/brass_plaque_tile.dart';
+import '../widgets/brass_champions_plaque_tile.dart';
 import 'team_champions_controller.dart';
 
 class TeamChampionsList extends StatelessWidget {
@@ -24,13 +24,13 @@ class TeamChampionsList extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         itemCount: controller.champions.length,
         itemBuilder: (_, i) {
-          final c = controller.champions[i];
+          final e = controller.champions[i];
 
           return Padding(
-            padding: const EdgeInsets.only(bottom: 12),
-            child: BrassPlaqueTile(
-              primary: '${c.season} ${c.year} · Division ${c.division}',
-              secondary: '${c.champion}  🏆  ${c.runnerUp}',
+            padding: const EdgeInsets.only(bottom: 14),
+            child: BrassChampionsPlaqueTile(
+              primary: '${e.season} ${e.year}  \nDivision ${e.division}',
+              secondary: '🏆 ${e.champion}\n🥈 ${e.runnerUp}',
             ),
           );
         },

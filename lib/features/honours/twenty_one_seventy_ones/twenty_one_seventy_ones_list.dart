@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:neda_central/features/honours/widgets/brass_individual_plaque_tile.dart';
 
-import '../widgets/brass_plaque_tile.dart';
 import 'twenty_one_seventy_ones_controller.dart';
 
 class TwentyOneSeventyOnesList extends StatelessWidget {
@@ -28,9 +28,9 @@ class TwentyOneSeventyOnesList extends StatelessWidget {
 
           return Padding(
             padding: const EdgeInsets.only(bottom: 12),
-            child: BrassPlaqueTile(
+            child: BrassIndividualPlaqueTile(
               primary: e.name,
-              secondary: '${e.career171} × 171 finishes',
+              secondary: '${e.career171}',
             ),
           );
         },
