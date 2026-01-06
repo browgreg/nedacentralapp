@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 
-import '../../../core/theme/neda_theme.dart';
 import '../controller/honours_controller.dart';
 import '../widgets/honours_category_tabs.dart';
 import '../widgets/honours_content.dart';
@@ -11,32 +12,20 @@ class HonoursScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(HonoursController());
+    final controller = Get.find<HonoursController>();
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Honours & Records'),
-      ),
+      appBar: AppBar(title: const Text('Honours & Records')),
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              nedaTeal,
-              Colors.black,
-              Colors.black,
-              Colors.black,
-              Colors.black,
-              Colors.black,
-              Colors.black,
-              Colors.black,
-            ],
-          ),
-        ),
+            image: DecorationImage(
+                image: AssetImage(
+                  'lib/core/assets/wood.jpg',
+                ),
+                opacity: 0.8,
+                fit: BoxFit.fill)),
         child: Column(
           children: [
-            const SizedBox(height: 12),
             HonourCategoryTabs(controller: controller),
             const SizedBox(height: 12),
             Expanded(

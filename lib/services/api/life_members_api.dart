@@ -1,42 +1,20 @@
 import 'package:flutter/foundation.dart';
 
-import '../http_client.dart'; // your HttpClient wrapper
+import '../../features/honours/life_members/life_member_dto.dart';
+import '../http_client.dart';
 
-class PresidentDto {
-  final int id;
-  final String name;
-  final int startYear;
-  final int endYear;
+class LifeMembersApi {
+  static Future<List<LifeMemberDto>> fetchLifeMembers() async {
+    final res = await HttpClient.get('/services/api/life_members.php');
 
-  PresidentDto({
-    required this.id,
-    required this.name,
-    required this.startYear,
-    required this.endYear,
-  });
-
-  factory PresidentDto.fromJson(Map<String, dynamic> j) {
-    return PresidentDto(
-      id: (j['id'] as num).toInt(),
-      name: (j['name'] ?? '').toString(),
-      startYear: (j['startYear'] as num).toInt(),
-      endYear: (j['endYear'] as num).toInt(),
-    );
-  }
-}
-
-class PresidentsApi {
-  static Future<List<PresidentDto>> fetchPresidents() async {
-    final res = await HttpClient.get(
-        '/services/api/presidents.php'); // whatever path maps to presidents.php
-
-    debugPrint('🟡 Presidents API raw: $res');
+    debugPrint('🟡 Life Members API raw: $res');
 
     if (res == null) return [];
 
     final List list = res is List ? res : (res['data'] as List? ?? []);
+
     return list
-        .map((e) => PresidentDto.fromJson(Map<String, dynamic>.from(e)))
+        .map((e) => LifeMemberDto.fromJson(Map<String, dynamic>.from(e)))
         .toList();
   }
 }

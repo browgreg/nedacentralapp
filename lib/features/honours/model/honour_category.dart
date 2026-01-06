@@ -11,7 +11,23 @@ enum HonourCategory {
   club170,
 }
 
+class HonourCategories {
+  static const List<HonourCategory> ordered = [
+    HonourCategory.presidents,
+    HonourCategory.lifeMembers,
+    HonourCategory.inMemoriam,
+    HonourCategory.teamChampions,
+    HonourCategory.singlesChampions,
+    HonourCategory.doublesChampions,
+    HonourCategory.hundreds180s,
+    HonourCategory.fifties180s,
+    HonourCategory.twenties171s,
+    HonourCategory.club170,
+  ];
+}
+
 extension HonourCategoryX on HonourCategory {
+  /// Display title (used in tabs + headers)
   String get title {
     switch (this) {
       case HonourCategory.presidents:
@@ -35,5 +51,10 @@ extension HonourCategoryX on HonourCategory {
       case HonourCategory.club170:
         return 'Club 170';
     }
+  }
+
+  /// Used if you ever want stable keys / analytics
+  String get key {
+    return name;
   }
 }

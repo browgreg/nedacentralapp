@@ -43,6 +43,7 @@ flutter:
     - lib/core/
     - lib/routes/
     - lib/services/
+    - lib/core/assets/
 
 flutter_icons:
   android: true

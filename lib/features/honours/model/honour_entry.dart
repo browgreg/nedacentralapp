@@ -1,11 +1,11 @@
 class HonourEntry {
-  final String primary;
-  final String secondary;
-  final String? period;
+  final String title;
+  final String subtitle;
+  final String period;
 
   const HonourEntry({
-    required this.primary,
-    required this.secondary,
-    this.period,
+    required this.title,
+    required this.subtitle,
+    required this.period,
   });
 }

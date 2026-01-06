@@ -1,43 +1,45 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/neda_theme.dart';
-import '../model/honour_entry.dart';
 
 class BrassPlaqueTile extends StatelessWidget {
-  final HonourEntry entry;
+  final String primary;
+  final String secondary;
 
-  const BrassPlaqueTile({super.key, required this.entry});
+  const BrassPlaqueTile({
+    super.key,
+    required this.primary,
+    required this.secondary,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-      decoration: brassTileBoxDecoration(),
-      child: Row(
-        children: [
-          /// Name + role
-          Expanded(
-            child: Text(
-              entry.primary.toUpperCase(),
-              style: const TextStyle(
-                fontSize: 22,
-                color: Color(0xFF2A1B0A),
-                fontWeight: FontWeight.bold,
-                letterSpacing: 1.2,
-              ),
-            ),
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: const Color(0xFFB08D57), // brass tone
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withAlpha(120),
+            blurRadius: 12,
+            offset: const Offset(0, 6),
           ),
-
-          /// Years
-          if (entry.period != null)
-            Text(
-              entry.period!,
-              style: TextStyle(
-                color: nedaBlack,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            primary.toUpperCase(),
+            style: NedaText.headingSmall(context).copyWith(color: Colors.black),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            secondary,
+            style: NedaText.muted(context)
+                .copyWith(color: Colors.black.withAlpha(180)),
+          ),
         ],
       ),
     );
