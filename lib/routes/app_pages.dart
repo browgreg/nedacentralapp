@@ -2,7 +2,8 @@ import 'package:get/get.dart';
 import 'package:neda_central/features/results/view/full_results_screen.dart';
 
 import '../features/fixtures/view/fixtures_screen.dart';
-import '../features/honours/view/honours_statistics_screen.dart';
+import '../features/honours/controller/honours_controller.dart';
+import '../features/honours/view/honours_screen.dart';
 import '../features/landing/bindings/landing_binding.dart';
 import '../features/landing/view/landing_screen.dart';
 import 'app_routes.dart';
@@ -20,7 +21,10 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.honours,
-      page: () => const HonourBoardScreen(),
+      page: () => const HonoursScreen(),
+      binding: BindingsBuilder(() {
+        Get.put(HonoursController());
+      }),
     ),
     GetPage(
       name: AppRoutes.results,

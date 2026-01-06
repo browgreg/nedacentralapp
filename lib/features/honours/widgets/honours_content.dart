@@ -1,49 +1,59 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/neda_theme.dart';
-import '../../../core/widgets/honour_board_background.dart';
-import '../model/honour_category.dart';
+import '../model/honour_entry.dart';
 
 class HonoursContent extends StatelessWidget {
-  final HonourCategory category;
+  final List<HonourEntry> entries;
 
   const HonoursContent({
     super.key,
-    required this.category,
+    required this.entries,
   });
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 300),
-      switchInCurve: Curves.easeOutCubic,
-      switchOutCurve: Curves.easeInCubic,
+    final n = Theme.of(context).extension<NedaTheme>()!;
 
-      /// ✅ Use a STABLE key (String / int), not the whole object
-      child: Center(
-        key: ValueKey(category.index), // 👈 IMPORTANT
-        child: HonourBoardBackground(
-          borderRadius: BorderRadius.circular(20),
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min, // 👈 avoids overflow issues
-              children: [
-                Text(
-                  category.name, // 👈 don’t hardcode
-                  style: NedaText.headingSmall(context).copyWith(
-                    color: Colors.white,
-                  ),
-                ),
-                const SizedBox(height: 12),
-
-                // honour content here
-              ],
-            ),
-          ),
+    if (entries.isEmpty) {
+      return Center(
+        child: Text(
+          'No records yet',
+          style: NedaText.muted(context),
         ),
-      ),
+      );
+    }
+
+    return ListView.builder(
+      padding: const EdgeInsets.all(16),
+      itemCount: entries.length,
+      itemBuilder: (_, i) {
+        final e = entries[i];
+
+        return Container(
+          margin: const EdgeInsets.only(bottom: 12),
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: n.surfaceCard,
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  e.primary,
+                  style: NedaText.body(context)
+                      .copyWith(fontWeight: FontWeight.w600),
+                ),
+              ),
+              Text(
+                e.period ?? '',
+                style: NedaText.muted(context),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

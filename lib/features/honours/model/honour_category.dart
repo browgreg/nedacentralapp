@@ -5,14 +5,14 @@ enum HonourCategory {
   teamChampions,
   singlesChampions,
   doublesChampions,
-  oneHundred180s,
-  fifty180s,
-  twenty171s,
-  club170s,
+  hundreds180s,
+  fifties180s,
+  twenties171s,
+  club170,
 }
 
 extension HonourCategoryX on HonourCategory {
-  String get label {
+  String get title {
     switch (this) {
       case HonourCategory.presidents:
         return 'Presidents';
@@ -26,13 +26,13 @@ extension HonourCategoryX on HonourCategory {
         return 'Singles Champions';
       case HonourCategory.doublesChampions:
         return 'Doubles Champions';
-      case HonourCategory.oneHundred180s:
-        return "100 180's";
-      case HonourCategory.fifty180s:
-        return "50 180's";
-      case HonourCategory.twenty171s:
-        return "20 171's";
-      case HonourCategory.club170s:
+      case HonourCategory.hundreds180s:
+        return '100 180s';
+      case HonourCategory.fifties180s:
+        return '50 180s';
+      case HonourCategory.twenties171s:
+        return '20 171s';
+      case HonourCategory.club170:
         return '170 Club';
     }
   }

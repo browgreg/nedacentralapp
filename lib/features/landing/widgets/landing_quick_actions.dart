@@ -3,7 +3,7 @@ import 'package:neda_central/features/results/view/full_results_screen.dart';
 
 import '../../../core/theme/neda_theme.dart';
 import '../../fixtures/view/fixtures_screen.dart';
-import '../../honours/view/honours_statistics_screen.dart';
+import '../../honours/view/honours_screen.dart';
 
 class LandingQuickActions extends StatelessWidget {
   const LandingQuickActions({super.key});
@@ -44,7 +44,7 @@ class LandingQuickActions extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (_) => const HonourBoardScreen()),
+                MaterialPageRoute(builder: (_) => const HonoursScreen()),
               );
             },
           ),
