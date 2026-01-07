@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:neda_central/features/honours/presidents/president_entry.dart';
 
@@ -26,6 +27,8 @@ class PresidentsController extends GetxController {
     );
 
     isLoading.value = false;
-    print('🟢 Presidents loaded: ${presidents.length}');
+    if (kDebugMode) {
+      print('🟢 Presidents loaded: ${presidents.length}');
+    }
   }
 }

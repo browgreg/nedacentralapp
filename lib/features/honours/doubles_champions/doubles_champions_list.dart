@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../core/theme/neda_theme.dart';
 import '../widgets/brass_champions_plaque_tile.dart';
 import 'doubles_champions_controller.dart';
 
@@ -11,7 +10,6 @@ class DoublesChampionsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(DoublesChampionsController());
-    final n = Theme.of(context).extension<NedaTheme>()!;
 
     return Obx(() {
       if (controller.isLoading.value) {

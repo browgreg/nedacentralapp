@@ -4,8 +4,8 @@ import 'package:neda_central/features/fixtures/view/fixtures_screen.dart';
 import 'package:neda_central/features/honours/view/honours_screen.dart';
 
 import '../core/config/app_config.dart';
+import '../features/admin/dashboard/admin_dashboard_screen.dart';
 import '../features/admin/presidents/admin_presidents_screen.dart';
-import '../features/admin/view/admin_dashboard_screen.dart';
 import '../features/honours/bindings/honours_binding.dart';
 import '../features/landing/bindings/landing_binding.dart';
 import '../features/landing/view/landing_screen.dart';

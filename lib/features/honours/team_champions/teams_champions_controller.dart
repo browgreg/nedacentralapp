@@ -5,7 +5,7 @@ import 'teams_champions_mapper.dart';
 import 'teams_champions_service.dart';
 
 class TeamsChampionsController extends GetxController {
-  final champions = <TeamsChampionEntry>[].obs;
+  final champions = <TeamChampionEntry>[].obs;
   final isLoading = true.obs;
 
   @override

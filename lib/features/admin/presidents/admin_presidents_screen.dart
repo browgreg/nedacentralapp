@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 
 import '../widgets/admin_scaffold.dart';
 import 'admin_presidents_controller.dart';
+import 'admin_presidents_form.dart';
+import 'admin_presidents_tile.dart';
 
 class AdminPresidentsScreen extends StatelessWidget {
   const AdminPresidentsScreen({super.key});
@@ -18,31 +20,52 @@ class AdminPresidentsScreen extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
 
-        if (controller.presidents.isEmpty) {
-          return const Center(
-            child: Text('No presidents found'),
-          );
-        }
-
-        return ListView.builder(
-          padding: const EdgeInsets.all(16),
-          itemCount: controller.presidents.length,
-          itemBuilder: (_, i) {
-            final p = controller.presidents[i];
-
-            final term = p.endYear == 0
-                ? '${p.startYear} – Present'
-                : '${p.startYear} – ${p.endYear}';
-
-            return Card(
-              margin: const EdgeInsets.only(bottom: 12),
-              child: ListTile(
-                title: Text(p.name),
-                subtitle: Text(term),
-                trailing: const Icon(Icons.lock_outline), // read-only for now
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            /// ➕ ADD BUTTON (TOP)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+              child: ElevatedButton.icon(
+                icon: const Icon(Icons.add),
+                label: const Text('Add President'),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (_) => const AdminPresidentForm(),
+                  );
+                },
               ),
-            );
-          },
+            ),
+
+            /// LIST
+            Expanded(
+              child: controller.presidents.isEmpty
+                  ? const Center(
+                      child: Text('No presidents recorded'),
+                    )
+                  : ListView.builder(
+                      padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+                      itemCount: controller.presidents.length,
+                      itemBuilder: (_, i) {
+                        final p = controller.presidents[i];
+
+                        return AdminPresidentTile(
+                          entry: p,
+                          onEdit: () {
+                            showDialog(
+                              context: context,
+                              builder: (_) => AdminPresidentForm(existing: p),
+                            );
+                          },
+                          onDelete: () async {
+                            await controller.remove(p);
+                          },
+                        );
+                      },
+                    ),
+            ),
+          ],
         );
       }),
     );

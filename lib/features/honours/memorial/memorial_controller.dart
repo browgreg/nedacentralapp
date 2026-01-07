@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 import '../../../services/api/memorial_api.dart';
@@ -15,6 +16,8 @@ class MemorialController extends GetxController {
   Future<void> load() async {
     final data = await MemorialApi.fetchMemorials();
     memorials.assignAll(data);
-    print('🟢 Memorials loaded: ${memorials.length}');
+    if (kDebugMode) {
+      print('🟢 Memorials loaded: ${memorials.length}');
+    }
   }
 }

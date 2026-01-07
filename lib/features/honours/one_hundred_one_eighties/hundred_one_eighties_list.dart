@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../core/theme/neda_theme.dart';
 import '../widgets/brass_individual_plaque_tile.dart';
 import 'hundred_one_eight_controller.dart';
 
@@ -11,7 +10,6 @@ class HundredOneEightiesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(HundredOneEightiesController());
-    final n = Theme.of(context).extension<NedaTheme>()!;
 
     return Obx(() {
       if (controller.isLoading.value) {

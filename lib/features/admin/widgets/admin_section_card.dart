@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'admin_action_tile.dart';
+import 'admin_section_tile.dart';
 
 class AdminSectionCard extends StatelessWidget {
   final String title;
-  final List<AdminActionTile> items;
+  final List<AdminSectionTile> items;
 
   const AdminSectionCard({
     super.key,

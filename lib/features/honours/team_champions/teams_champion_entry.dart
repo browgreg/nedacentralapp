@@ -1,15 +1,15 @@
-class TeamsChampionEntry {
+class TeamChampionEntry {
   final int year;
-  final int division;
   final String season;
+  final int division;
   final String champion;
   final String runnerUp;
 
-  const TeamsChampionEntry({
+  TeamChampionEntry({
     required this.year,
+    required this.season,
     required this.division,
     required this.champion,
     required this.runnerUp,
-    required this.season,
   });
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../core/theme/neda_theme.dart';
 import '../../../core/utils/date_formatters.dart';
 import '../../../core/utils/map_launcher.dart';
@@ -31,9 +32,8 @@ class PosterCtaRow extends StatelessWidget {
                   borderRadius: BorderRadius.circular(14),
                 ),
               ),
-              onPressed: hasLocation
-                  ? () => MapLauncher.open(poster.content!)
-                  : null,
+              onPressed:
+                  hasLocation ? () => MapLauncher.open(poster.content!) : null,
             ),
           ),
 
@@ -72,8 +72,6 @@ class PosterMetaRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final n = Theme.of(context).extension<NedaTheme>()!;
-
     return Wrap(
       spacing: 8,
       runSpacing: 8,
@@ -85,7 +83,6 @@ class PosterMetaRow extends StatelessWidget {
             poster.endDate,
           ),
         ),
-
         if (poster.location != null)
           _MetaChip(
             icon: Icons.location_on_outlined,

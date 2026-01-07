@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
+import 'package:neda_central/features/honours/singles_champions/singles_champion_entry.dart';
 
-import '../../admin/singles_champions/singles_champion_entry.dart';
 import 'singles_champions_mapper.dart';
 import 'singles_champions_service.dart';
 

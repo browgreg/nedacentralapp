@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 import '../../../services/api/life_members_api.dart';
@@ -17,6 +18,8 @@ class LifeMembersController extends GetxController {
 
     lifeMembers.assignAll(entries);
 
-    print('🟢 Life members loaded: ${lifeMembers.length}');
+    if (kDebugMode) {
+      print('🟢 Life members loaded: ${lifeMembers.length}');
+    }
   }
 }

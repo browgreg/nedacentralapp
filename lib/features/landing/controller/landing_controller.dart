@@ -19,6 +19,7 @@ class LandingController extends GetxController {
       posters.assignAll(result);
 
       // Pre-cache images AFTER data loads
+      // ignore: use_build_context_synchronously
       await _precacheImages(context);
     } catch (e) {
       error.value = 'Failed to load content';
@@ -34,17 +35,15 @@ class LandingController extends GetxController {
   // Derived views
   // ─────────────────────────
 
-  List<Poster> get heroPosters =>
-      posters
-          .where((p) => p.source == PosterSource.tournament && !p.isExpired)
-          .toList()
-        ..sort(_sort);
+  List<Poster> get heroPosters => posters
+      .where((p) => p.source == PosterSource.tournament && !p.isExpired)
+      .toList()
+    ..sort(_sort);
 
-  List<Poster> get clubStories =>
-      posters
-          .where((p) => p.source == PosterSource.club && !p.isExpired)
-          .toList()
-        ..sort(_sort);
+  List<Poster> get clubStories => posters
+      .where((p) => p.source == PosterSource.club && !p.isExpired)
+      .toList()
+    ..sort(_sort);
 
   int _sort(Poster a, Poster b) {
     final p = b.priority.compareTo(a.priority);

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AdminActionTile extends StatelessWidget {
+class AdminSectionTile extends StatelessWidget {
   final String label;
   final String route;
 
-  const AdminActionTile({
+  const AdminSectionTile({
     super.key,
     required this.label,
     required this.route,

@@ -1,39 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../core/theme/neda_theme.dart';
 import '../widgets/admin_scaffold.dart';
-import 'admin_singles_champions_controller.dart';
-import 'admin_singles_champions_form.dart';
+import 'admin_team_champion_form.dart';
+import 'admin_team_champions_controller.dart';
 
-class AdminSinglesChampionsScreen extends StatelessWidget {
-  const AdminSinglesChampionsScreen({super.key});
+class AdminTeamChampionsScreen extends StatelessWidget {
+  const AdminTeamChampionsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(AdminSinglesChampionsController());
+    final controller = Get.put(AdminTeamChampionsController());
+    final n = Theme.of(context).extension<NedaTheme>()!;
 
     return AdminScaffold(
-      title: 'Singles Champions',
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.add),
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (_) => const AdminSinglesChampionForm(),
-            );
-          },
-        ),
-      ],
+      title: 'Team Champions',
       child: Obx(() {
         if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
-        }
-
-        if (controller.champions.isEmpty) {
-          return const Center(
-            child: Text('No singles champions recorded'),
-          );
         }
 
         return LayoutBuilder(
@@ -46,7 +31,7 @@ class AdminSinglesChampionsScreen extends StatelessWidget {
                 crossAxisCount: isWide ? 2 : 1,
                 mainAxisSpacing: 16,
                 crossAxisSpacing: 16,
-                childAspectRatio: 3.2, // plaque-style
+                childAspectRatio: 3.2,
               ),
               itemCount: controller.champions.length,
               itemBuilder: (_, i) {
@@ -54,6 +39,7 @@ class AdminSinglesChampionsScreen extends StatelessWidget {
 
                 return Card(
                   elevation: 6,
+                  color: n.surfaceCard,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14),
                   ),
@@ -65,13 +51,13 @@ class AdminSinglesChampionsScreen extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        /// LEFT – content
+                        /// INFO
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              '${e.year} — Division ${e.division}',
+                              '${e.year} ${e.season} — Division ${e.division}',
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             const SizedBox(height: 6),
@@ -89,7 +75,7 @@ class AdminSinglesChampionsScreen extends StatelessWidget {
                           ],
                         ),
 
-                        /// RIGHT – actions
+                        /// ACTIONS
                         Row(
                           children: [
                             IconButton(
@@ -98,12 +84,12 @@ class AdminSinglesChampionsScreen extends StatelessWidget {
                                 showDialog(
                                   context: context,
                                   builder: (_) =>
-                                      AdminSinglesChampionForm(existing: e),
+                                      AdminTeamChampionForm(existing: e),
                                 );
                               },
                             ),
                             IconButton(
-                              icon: const Icon(Icons.delete_outline),
+                              icon: const Icon(Icons.delete),
                               onPressed: () {
                                 controller.remove(e);
                               },

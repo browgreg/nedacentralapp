@@ -1,25 +1,48 @@
 class AdminPresidentEntry {
-  final int id;
+  final int? id;
+  final int rego;
   final String name;
   final int startYear;
   final int endYear;
 
-  const AdminPresidentEntry({
-    required this.id,
+  AdminPresidentEntry({
+    this.id,
+    required this.rego,
     required this.name,
     required this.startYear,
     required this.endYear,
   });
 
-  factory AdminPresidentEntry.fromJson(Map<String, dynamic> j) {
+  factory AdminPresidentEntry.fromJson(Map<String, dynamic> json) {
     return AdminPresidentEntry(
-      id: (j['id'] as num).toInt(),
-      name: (j['name'] ?? '').toString(),
-      startYear: (j['startYear'] as num).toInt(),
-      endYear: (j['endYear'] as num).toInt(),
+      id: json['id'] as int?,
+      rego: (json['rego'] as num).toInt(),
+      name: json['name'].toString(),
+      startYear: (json['startYear'] as num).toInt(),
+      endYear: (json['endYear'] as num).toInt(),
     );
   }
 
-  String get period =>
-      endYear == 0 ? '$startYear – Present' : '$startYear – $endYear';
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'rego': rego,
+        'start_year': startYear,
+        'end_year': endYear,
+      };
+
+  AdminPresidentEntry copyWith({
+    int? id,
+    int? rego,
+    String? name,
+    int? startYear,
+    int? endYear,
+  }) {
+    return AdminPresidentEntry(
+      id: id ?? this.id,
+      rego: rego ?? this.rego,
+      name: name ?? this.name,
+      startYear: startYear ?? this.startYear,
+      endYear: endYear ?? this.endYear,
+    );
+  }
 }

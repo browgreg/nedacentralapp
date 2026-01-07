@@ -1,4 +1,4 @@
-import '../../admin/singles_champions/singles_champion_entry.dart';
+import 'package:neda_central/features/honours/singles_champions/singles_champion_entry.dart';
 
 class SinglesChampionsMapper {
   static SinglesChampionEntry fromJson(Map<String, dynamic> json) {
