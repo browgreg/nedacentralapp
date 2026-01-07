@@ -4,7 +4,7 @@ class AppConfig {
   static const bool isDevMode = true;
 
   /// 🚧 Dev-only features
-  static const bool showHonoursAsHome = true;
+  static const bool showHonoursAsHome = false;
 
   static const bool enableAnalyticsDebug = true;
   static const bool useMockData = false;

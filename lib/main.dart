@@ -54,6 +54,6 @@ class NedaApp extends StatelessWidget {
     if (AppConfig.isDevMode && AppConfig.showHonoursAsHome) {
       return AppRoutes.honours;
     }
-    return AppRoutes.landing;
+    return AppRoutes.admin;
   }
 }
