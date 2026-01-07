@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../widgets/brass_champions_plaque_tile.dart';
-import 'singles_champions_controller.dart';
+import 'teams_champions_controller.dart';
 
-class SinglesChampionsList extends StatelessWidget {
-  const SinglesChampionsList({super.key});
+class TeamsChampionsList extends StatelessWidget {
+  const TeamsChampionsList({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(SinglesChampionsController());
+    final controller = Get.put(TeamsChampionsController());
 
     return Obx(() {
       if (controller.isLoading.value) {
@@ -17,7 +17,7 @@ class SinglesChampionsList extends StatelessWidget {
       }
 
       if (controller.champions.isEmpty) {
-        return const Center(child: Text('No singles champions recorded'));
+        return const Center(child: Text('No Teams champions recorded'));
       }
 
       return ListView.builder(

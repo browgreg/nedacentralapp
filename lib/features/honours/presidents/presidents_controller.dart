@@ -1,28 +1,31 @@
 import 'package:get/get.dart';
 import 'package:neda_central/features/honours/presidents/president_entry.dart';
 
-import '../../../services/api/presidents_api.dart';
+import 'presidents_service.dart';
 
 class PresidentsController extends GetxController {
-  final presidents = <PresidentEntry>[].obs;
+  final presidents = <PresidentsEntry>[].obs;
+  final isLoading = true.obs;
 
   @override
   void onInit() {
     super.onInit();
-    loadPresidents();
+    _load();
   }
 
-  Future<void> loadPresidents() async {
-    final dtoList = await PresidentsApi.fetchPresidents();
+  Future<void> _load() async {
+    final dtos = await PresidentsService.fetch();
 
     presidents.assignAll(
-      dtoList.map(
-        (p) => PresidentEntry(
+      dtos.map(
+        (p) => PresidentsEntry(
           name: p.name,
-          startYear: p.startYear,
-          endYear: p.endYear,
+          term: p.term,
         ),
       ),
     );
+
+    isLoading.value = false;
+    print('🟢 Presidents loaded: ${presidents.length}');
   }
 }

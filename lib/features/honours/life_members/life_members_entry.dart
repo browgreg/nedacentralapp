@@ -1,9 +1,19 @@
 class LifeMemberEntry {
+  final int id;
   final String name;
-  final String year;
+  final int inductionYear;
 
-  const LifeMemberEntry({
+  LifeMemberEntry({
+    required this.id,
     required this.name,
-    required this.year,
+    required this.inductionYear,
   });
+
+  factory LifeMemberEntry.fromJson(Map<String, dynamic> json) {
+    return LifeMemberEntry(
+      id: (json['id'] as num).toInt(),
+      name: json['name'] as String,
+      inductionYear: (json['inductionYear'] as num).toInt(),
+    );
+  }
 }

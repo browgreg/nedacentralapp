@@ -1,28 +1,32 @@
 import 'package:get/get.dart';
 
-import 'singles_champion_entry.dart';
+import '../../admin/singles_champions/singles_champion_entry.dart';
+import 'singles_champions_mapper.dart';
 import 'singles_champions_service.dart';
 
 class SinglesChampionsController extends GetxController {
-  final entries = <SinglesChampionEntry>[].obs;
+  final champions = <SinglesChampionEntry>[].obs;
+  final isLoading = true.obs;
 
   @override
   void onInit() {
     super.onInit();
-    _load();
+    loadChampions();
   }
 
-  Future<void> _load() async {
-    final data = await SinglesChampionsService.fetch();
-    entries.assignAll(data);
-  }
+  Future<void> loadChampions() async {
+    isLoading.value = true;
 
-  /// Group by division for UI
-  Map<int, List<SinglesChampionEntry>> get groupedByDivision {
-    final map = <int, List<SinglesChampionEntry>>{};
-    for (final e in entries) {
-      map.putIfAbsent(e.division, () => []).add(e);
-    }
-    return map;
+    final raw = await SinglesChampionsService.fetch();
+
+    champions.assignAll(
+      raw.map(
+        (e) => SinglesChampionsMapper.fromJson(
+          Map<String, dynamic>.from(e),
+        ),
+      ),
+    );
+
+    isLoading.value = false;
   }
 }

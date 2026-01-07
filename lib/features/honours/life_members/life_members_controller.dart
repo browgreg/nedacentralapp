@@ -13,16 +13,9 @@ class LifeMembersController extends GetxController {
   }
 
   Future<void> loadLifeMembers() async {
-    final dtos = await LifeMembersApi.fetchLifeMembers();
+    final entries = await LifeMembersApi.fetchLifeMembers();
 
-    lifeMembers.assignAll(
-      dtos.map(
-        (m) => LifeMemberEntry(
-          name: m.name,
-          year: m.inductionYear.toString(),
-        ),
-      ),
-    );
+    lifeMembers.assignAll(entries);
 
     print('🟢 Life members loaded: ${lifeMembers.length}');
   }

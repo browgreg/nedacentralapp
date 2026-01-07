@@ -1,22 +1,42 @@
-import 'dart:convert';
+import 'package:flutter/foundation.dart';
 
-import 'package:http/http.dart' as http;
+import '../../../services/http_client.dart';
 
-import 'president_entry.dart';
-import 'presidents_mapper.dart';
+class PresidentDto {
+  final String name;
+  final int startYear;
+  final int endYear;
+
+  PresidentDto({
+    required this.name,
+    required this.startYear,
+    required this.endYear,
+  });
+
+  factory PresidentDto.fromJson(Map<String, dynamic> json) {
+    return PresidentDto(
+      name: json['name'].toString(),
+      startYear: (json['startYear'] as num).toInt(),
+      endYear: (json['endYear'] as num).toInt(),
+    );
+  }
+
+  String get term {
+    if (endYear == 0) return '$startYear – Present';
+    return '$startYear – $endYear';
+  }
+}
 
 class PresidentsService {
-  static const _url = 'https://neda.club/BackEnd/services/api/presidents.php';
+  static Future<List<PresidentDto>> fetch() async {
+    final res = await HttpClient.get('/services/api/presidents.php');
 
-  static Future<List<PresidentEntry>> fetchPresidents() async {
-    final res = await http.get(Uri.parse(_url));
+    debugPrint('🟡 Presidents API raw: $res');
 
-    if (res.statusCode != 200) {
-      throw Exception('Failed to load presidents');
-    }
+    if (res == null || res is! List) return [];
 
-    final List data = json.decode(res.body);
-
-    return data.map((e) => PresidentsMapper.fromJson(e)).toList();
+    return res
+        .map((e) => PresidentDto.fromJson(Map<String, dynamic>.from(e)))
+        .toList();
   }
 }

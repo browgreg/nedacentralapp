@@ -1,19 +1,32 @@
 import 'package:get/get.dart';
 
 import 'fifty_one_eight_entry.dart';
+import 'fifty_one_eight_mapper.dart';
 import 'fifty_one_eight_service.dart';
 
-class FiftyOneEightController extends GetxController {
-  final entries = <FiftyOneEightEntry>[].obs;
+class FiftyOneEightiesController extends GetxController {
+  final stats = <StatEntry>[].obs;
+  final isLoading = true.obs;
 
   @override
   void onInit() {
     super.onInit();
-    _load();
+    load();
   }
 
-  Future<void> _load() async {
-    final data = await FiftyOneEightService.fetch();
-    entries.assignAll(data);
+  Future<void> load() async {
+    isLoading.value = true;
+
+    final raw = await FiftyOneEightiesService.fetch();
+
+    stats.assignAll(
+      raw.map(
+        (e) => FiftyOneEightiesMapper.fromJson(
+          Map<String, dynamic>.from(e),
+        ),
+      ),
+    );
+
+    isLoading.value = false;
   }
 }

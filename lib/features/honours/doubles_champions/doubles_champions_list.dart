@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../core/theme/neda_theme.dart';
 import '../widgets/brass_champions_plaque_tile.dart';
-import 'team_champions_controller.dart';
+import 'doubles_champions_controller.dart';
 
-class TeamChampionsList extends StatelessWidget {
-  const TeamChampionsList({super.key});
+class DoublesChampionsList extends StatelessWidget {
+  const DoublesChampionsList({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(TeamChampionsController());
+    final controller = Get.put(DoublesChampionsController());
+    final n = Theme.of(context).extension<NedaTheme>()!;
 
     return Obx(() {
       if (controller.isLoading.value) {
@@ -17,7 +19,7 @@ class TeamChampionsList extends StatelessWidget {
       }
 
       if (controller.champions.isEmpty) {
-        return const Center(child: Text('No team champions recorded'));
+        return const Center(child: Text('No doubles champions recorded'));
       }
 
       return ListView.builder(
@@ -27,10 +29,11 @@ class TeamChampionsList extends StatelessWidget {
           final e = controller.champions[i];
 
           return Padding(
-            padding: const EdgeInsets.only(bottom: 14),
+            padding: const EdgeInsets.only(bottom: 16),
             child: BrassChampionsPlaqueTile(
-              primary: '${e.season} ${e.year}  \nDivision ${e.division}',
-              secondary: '🏆 ${e.champion}\n🥈 ${e.runnerUp}',
+              primary: 'Div ${e.division} • ${e.year}',
+              secondary: '${e.championA} & ${e.championB}\n'
+                  'Runner-up: ${e.runnerUpA} & ${e.runnerUpB}',
             ),
           );
         },

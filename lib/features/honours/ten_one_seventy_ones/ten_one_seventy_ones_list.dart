@@ -1,36 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:neda_central/features/honours/widgets/brass_individual_plaque_tile.dart';
 
-import 'twenty_one_seventy_ones_controller.dart';
+import '../widgets/brass_individual_plaque_tile.dart';
+import 'ten_one_seventy_ones_controller.dart';
 
-class TwentyOneSeventyOnesList extends StatelessWidget {
-  const TwentyOneSeventyOnesList({super.key});
+class TenOneSeventyOnesList extends StatelessWidget {
+  const TenOneSeventyOnesList({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(TwentyOneSeventyOnesController());
+    final controller = Get.put(TenOneSeventyOnesController());
 
     return Obx(() {
       if (controller.isLoading.value) {
         return const Center(child: CircularProgressIndicator());
       }
 
-      if (controller.entries.isEmpty) {
-        return const Center(child: Text('No 171 finishes recorded'));
+      if (controller.stats.isEmpty) {
+        return const Center(child: Text('No records found'));
       }
 
       return ListView.builder(
         padding: const EdgeInsets.all(16),
-        itemCount: controller.entries.length,
+        itemCount: controller.stats.length,
         itemBuilder: (_, i) {
-          final e = controller.entries[i];
+          final e = controller.stats[i];
 
           return Padding(
             padding: const EdgeInsets.only(bottom: 12),
             child: BrassIndividualPlaqueTile(
               primary: e.name,
-              secondary: '${e.career171}',
+              secondary: '${e.total}',
             ),
           );
         },

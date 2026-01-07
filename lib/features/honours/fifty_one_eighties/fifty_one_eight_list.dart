@@ -1,32 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:neda_central/features/honours/widgets/brass_individual_plaque_tile.dart';
 
-import '../widgets/brass_individual_plaque_tile.dart';
+import '../../../core/theme/neda_theme.dart';
 import 'fifty_one_eight_controller.dart';
 
-class FiftyOneEightList extends StatelessWidget {
-  const FiftyOneEightList({super.key});
+class FiftyOneEightiesList extends StatelessWidget {
+  const FiftyOneEightiesList({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(FiftyOneEightController());
+    final controller = Get.put(FiftyOneEightiesController());
+    final n = Theme.of(context).extension<NedaTheme>()!;
 
     return Obx(() {
-      if (controller.entries.isEmpty) {
-        return const Center(child: Text('No 50–99 career 180s recorded'));
+      if (controller.isLoading.value) {
+        return const Center(child: CircularProgressIndicator());
+      }
+
+      if (controller.stats.isEmpty) {
+        return const Center(child: Text('No records found'));
       }
 
       return ListView.builder(
         padding: const EdgeInsets.all(16),
-        itemCount: controller.entries.length,
+        itemCount: controller.stats.length,
         itemBuilder: (_, i) {
-          final e = controller.entries[i];
+          final e = controller.stats[i];
 
           return Padding(
             padding: const EdgeInsets.only(bottom: 12),
             child: BrassIndividualPlaqueTile(
               primary: e.name,
-              secondary: '${e.career180}',
+              secondary: '${e.total}',
             ),
           );
         },

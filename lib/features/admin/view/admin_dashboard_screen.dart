@@ -1,56 +1,81 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-import '../../../core/theme/neda_theme.dart';
-import '../widgets/admin_nav_tile.dart';
+import '../controllers/admin_dashboard_controller.dart';
+import '../widgets/admin_action_tile.dart';
+import '../widgets/admin_scaffold.dart';
+import '../widgets/admin_section_card.dart';
 
 class AdminDashboardScreen extends StatelessWidget {
   const AdminDashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final n = Theme.of(context).extension<NedaTheme>()!;
+    final controller = Get.put(AdminDashboardController());
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Admin Dashboard'),
-        backgroundColor: n.surfaceCard,
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
+    return AdminScaffold(
+      title: 'Admin Dashboard',
+      child: ListView(
+        padding: const EdgeInsets.all(20),
         children: const [
-          _Section(title: 'Governance'),
-          AdminNavTile(label: 'Presidents'),
-          AdminNavTile(label: 'Life Members'),
-          AdminNavTile(label: 'In Memoriam'),
+          AdminSectionCard(
+            title: 'Club Officials',
+            items: [
+              AdminActionTile(
+                label: 'Presidents',
+                route: '/admin/presidents',
+              ),
+              AdminActionTile(
+                label: 'Life Members',
+                route: '/admin/life-members',
+              ),
+              AdminActionTile(
+                label: 'In Memoriam',
+                route: '/admin/memorial',
+              ),
+            ],
+          ),
           SizedBox(height: 24),
-          _Section(title: 'Championships'),
-          AdminNavTile(label: 'Team Champions'),
-          AdminNavTile(label: 'Singles Champions'),
-          AdminNavTile(label: 'Doubles Champions'),
+          AdminSectionCard(
+            title: 'Championships',
+            items: [
+              AdminActionTile(
+                label: 'Team Champions',
+                route: '/admin/team-champions',
+              ),
+              AdminActionTile(
+                label: 'Singles Champions',
+                route: '/admin/singles',
+              ),
+              AdminActionTile(
+                label: 'Doubles Champions',
+                route: '/admin/doubles',
+              ),
+            ],
+          ),
           SizedBox(height: 24),
-          _Section(title: 'Performance Stats'),
-          AdminNavTile(label: '180s (50–99)'),
-          AdminNavTile(label: '180s (100+)'),
-          AdminNavTile(label: '171s'),
-          AdminNavTile(label: '170 Club'),
+          AdminSectionCard(
+            title: 'Statistics',
+            items: [
+              AdminActionTile(
+                label: '180s (100+)',
+                route: '/admin/180s-100',
+              ),
+              AdminActionTile(
+                label: '180s (50+)',
+                route: '/admin/180s-50',
+              ),
+              AdminActionTile(
+                label: '171s',
+                route: '/admin/171s',
+              ),
+              AdminActionTile(
+                label: '170 Club',
+                route: '/admin/170-club',
+              ),
+            ],
+          ),
         ],
-      ),
-    );
-  }
-}
-
-class _Section extends StatelessWidget {
-  final String title;
-
-  const _Section({required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: Text(
-        title,
-        style: Theme.of(context).textTheme.titleMedium,
       ),
     );
   }

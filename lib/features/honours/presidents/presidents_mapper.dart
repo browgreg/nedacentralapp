@@ -1,11 +1,16 @@
-import 'president_entry.dart';
+import 'package:neda_central/features/honours/presidents/president_entry.dart';
 
 class PresidentsMapper {
-  static PresidentEntry fromJson(Map<String, dynamic> json) {
-    return PresidentEntry(
-      name: json['name'],
-      startYear: json['startYear'],
-      endYear: json['endYear'],
+  static PresidentsEntry fromJson(Map<String, dynamic> json) {
+    final int startYear = (json['startYear'] as num).toInt();
+    final int endYear = (json['endYear'] as num).toInt();
+
+    final String term =
+        endYear == 0 ? '$startYear – Present' : '$startYear – $endYear';
+
+    return PresidentsEntry(
+      name: json['name'].toString(),
+      term: term,
     );
   }
 }

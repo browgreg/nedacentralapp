@@ -1,14 +1,9 @@
-class PresidentEntry {
+class PresidentsEntry {
   final String name;
-  final int startYear;
-  final int endYear;
+  final String term;
 
-  const PresidentEntry({
+  const PresidentsEntry({
     required this.name,
-    required this.startYear,
-    required this.endYear,
+    required this.term,
   });
-
-  String get term =>
-      endYear == 0 ? '$startYear – Present' : '$startYear – $endYear';
 }

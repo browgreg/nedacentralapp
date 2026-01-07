@@ -10,13 +10,4 @@ class SinglesChampionEntry {
     required this.champion,
     required this.runnerUp,
   });
-
-  factory SinglesChampionEntry.fromJson(Map<String, dynamic> json) {
-    return SinglesChampionEntry(
-      year: json['year'] as int,
-      division: json['div'] as int,
-      champion: json['champion_name'] as String,
-      runnerUp: json['runnerup_name'] as String,
-    );
-  }
 }

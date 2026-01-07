@@ -68,7 +68,7 @@ class LifeMembersList extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          'Inducted ${m.year}',
+                          'Inducted ${m.inductionYear}',
                           style: NedaText.headingSmall(context)
                               .copyWith(color: Colors.black.withAlpha(180)),
                         ),

@@ -1,16 +1,9 @@
-class FiftyOneEightEntry {
+class StatEntry {
   final String name;
-  final int career180;
+  final int total;
 
-  const FiftyOneEightEntry({
+  const StatEntry({
     required this.name,
-    required this.career180,
+    required this.total,
   });
-
-  factory FiftyOneEightEntry.fromJson(Map<String, dynamic> json) {
-    return FiftyOneEightEntry(
-      name: json['name'] as String,
-      career180: (json['Career180'] as num).toInt(),
-    );
-  }
 }

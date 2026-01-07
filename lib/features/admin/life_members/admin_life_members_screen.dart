@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../core/theme/neda_theme.dart';
+import '../widgets/admin_scaffold.dart';
 import 'admin_life_members_controller.dart';
 
 class AdminLifeMembersScreen extends StatelessWidget {
@@ -9,51 +9,33 @@ class AdminLifeMembersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final n = Theme.of(context).extension<NedaTheme>()!;
     final controller = Get.put(AdminLifeMembersController());
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Admin · Life Members'),
-        backgroundColor: n.surfaceCard,
-      ),
-      body: Obx(() {
+    return AdminScaffold(
+      title: 'Life Members',
+      child: Obx(() {
         if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
         }
 
         if (controller.lifeMembers.isEmpty) {
-          return const Center(child: Text('No life members found'));
+          return const Center(
+            child: Text('No life members found'),
+          );
         }
 
-        return ListView.separated(
+        return ListView.builder(
           padding: const EdgeInsets.all(16),
           itemCount: controller.lifeMembers.length,
-          separatorBuilder: (_, __) => const SizedBox(height: 12),
           itemBuilder: (_, i) {
             final m = controller.lifeMembers[i];
 
-            return Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: n.surfaceCard,
-                borderRadius: BorderRadius.circular(14),
-                boxShadow: n.shadowSoft,
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      m.name,
-                      style: NedaText.body(context)
-                          .copyWith(fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                  Text(
-                    m.inductionYear.toString(),
-                    style: NedaText.muted(context),
-                  ),
-                ],
+            return Card(
+              margin: const EdgeInsets.only(bottom: 12),
+              child: ListTile(
+                title: Text(m.name),
+                subtitle: Text('Inducted ${m.inductionYear}'),
+                trailing: const Icon(Icons.lock_outline), // read-only
               ),
             );
           },

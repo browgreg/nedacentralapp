@@ -2,11 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 import '../../../services/api/life_members_api.dart';
-import '../../honours/life_members/life_member_dto.dart';
-import 'admin_life_member_entry.dart';
+import '../../honours/life_members/life_members_entry.dart';
 
 class AdminLifeMembersController extends GetxController {
-  final lifeMembers = <AdminLifeMemberEntry>[].obs;
+  final lifeMembers = <LifeMemberEntry>[].obs;
   final isLoading = false.obs;
 
   @override
@@ -19,22 +18,12 @@ class AdminLifeMembersController extends GetxController {
     try {
       isLoading.value = true;
 
-      final List<LifeMemberDto> res = await LifeMembersApi.fetchLifeMembers();
+      final data = await LifeMembersApi.fetchLifeMembers();
+      lifeMembers.assignAll(data);
 
-      lifeMembers.assignAll(
-        res.map(
-          (m) => AdminLifeMemberEntry(
-            id: m.id,
-            name: m.name,
-            inductionYear: m.inductionYear,
-          ),
-        ),
-      );
-
-      debugPrint('🟢 Admin life members loaded: ${lifeMembers.length}');
-    } catch (e, s) {
+      debugPrint('🟢 Admin Life Members loaded: ${data.length}');
+    } catch (e) {
       debugPrint('🔴 Failed to load life members: $e');
-      debugPrintStack(stackTrace: s);
     } finally {
       isLoading.value = false;
     }
