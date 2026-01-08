@@ -46,7 +46,7 @@ class AdminSinglesChampionsTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Winner: ${entry.champion}',
+                    'Winner: ${entry.championName}',
                     style: Theme.of(context)
                         .textTheme
                         .titleMedium
@@ -54,7 +54,7 @@ class AdminSinglesChampionsTile extends StatelessWidget {
                   ),
                   const SizedBox(height: 6),
                   Text(
-                    'Runner-up: ${entry.runnerUp}',
+                    'Runner-up: ${entry.runnerUpName}',
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],

@@ -79,14 +79,14 @@ class AdminSinglesChampionsScreen extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 2),
                                 Text(
-                                  'Winner: ${e.champion}',
+                                  'Winner: ${e.championName}',
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium
                                       ?.copyWith(fontWeight: FontWeight.bold),
                                 ),
                                 Text(
-                                  'Runner-up: ${e.runnerUp}',
+                                  'Runner-up: ${e.runnerUpName}',
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium
