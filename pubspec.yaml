@@ -44,11 +44,11 @@ flutter:
     - lib/core/
     - lib/routes/
     - lib/services/
-    - lib/core/assets/
+    - lib/assets/
 
 flutter_icons:
   android: true
   ios: true
-  image_path: "lib/core/assets/logo.png"
+  image_path: "lib/assets/logo.png"
   adaptive_icon_background: "#000000"
-  adaptive_icon_foreground: "lib/core/assets/logo.png"
+  adaptive_icon_foreground: "lib/assets/logo.png"

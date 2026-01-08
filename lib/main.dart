@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:neda_central/routes/app_pages.dart';
 import 'package:neda_central/routes/app_routes.dart';
 
+import 'app/bindings/app_bindings.dart';
 import 'core/config/app_config.dart';
 import 'core/theme/app_theme.dart';
 
@@ -28,6 +29,7 @@ class NedaApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'NEDA Central',
       debugShowCheckedModeBanner: false,
+      initialBinding: AppBindings(),
       initialRoute: _initialRoute(),
       getPages: AppPages.pages,
       builder: (context, child) {

@@ -5,8 +5,8 @@ import '../widgets/admin_scaffold.dart';
 import 'admin_one_seventy_club_controller.dart';
 import 'admin_one_seventy_club_form.dart';
 
-class AdminOneSeventyClubsScreen extends StatelessWidget {
-  const AdminOneSeventyClubsScreen({super.key});
+class AdminOneSeventyClubScreen extends StatelessWidget {
+  const AdminOneSeventyClubScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
