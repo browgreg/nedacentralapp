@@ -12,7 +12,7 @@ class AdminDashboardScreen extends StatelessWidget {
       title: 'Admin Dashboard',
       child: GridView.count(
         padding: const EdgeInsets.all(16),
-        crossAxisCount: 2,
+        crossAxisCount: 4,
         mainAxisSpacing: 16,
         crossAxisSpacing: 16,
         children: [
@@ -24,17 +24,22 @@ class AdminDashboardScreen extends StatelessWidget {
           _AdminTile(
             title: 'Life Members',
             icon: Icons.star,
-            route: '/admin/life-members',
+            route: '/admin/lifeMembers',
           ),
           _AdminTile(
             title: 'Team Champions',
             icon: Icons.groups,
-            route: '/admin/team-champions',
+            route: '/admin/teamsChampions',
           ),
           _AdminTile(
             title: 'Singles Champions',
             icon: Icons.person,
-            route: '/admin/singles-champions',
+            route: '/admin/singlesChampions',
+          ),
+          _AdminTile(
+            title: 'Doubles Champions',
+            icon: Icons.people,
+            route: '/admin/doublesChampions',
           ),
           _AdminTile(
             title: 'Results',

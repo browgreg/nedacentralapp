@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../core/theme/neda_theme.dart';
-import '../../honours/widgets/brass_plaque_tile.dart';
+import '../widgets/admin_scaffold.dart';
+import 'admin_doubles_champion_form.dart';
 import 'admin_doubles_champions_controller.dart';
 
 class AdminDoublesChampionsScreen extends StatelessWidget {
@@ -10,40 +10,117 @@ class AdminDoublesChampionsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final n = Theme.of(context).extension<NedaTheme>()!;
     final controller = Get.put(AdminDoublesChampionsController());
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Doubles Champions'),
-        backgroundColor: n.surfaceCard,
-      ),
-      body: Obx(() {
+    return AdminScaffold(
+      title: 'Doubles Champions',
+      child: Obx(() {
         if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
         }
 
-        if (controller.entries.isEmpty) {
-          return const Center(child: Text('No records found'));
-        }
-
-        return ListView.builder(
-          padding: const EdgeInsets.all(16),
-          itemCount: controller.entries.length,
-          itemBuilder: (_, i) {
-            final e = controller.entries[i];
-
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 14),
-              child: BrassPlaqueTile(
-                primary: 'Division ${e.division} — ${e.year}',
-                secondary: 'Winners:\n'
-                    '${e.championA} & ${e.championB}\n\n'
-                    'Runners-up:\n'
-                    '${e.runnerUpA} & ${e.runnerUpB}',
+        return Column(
+          children: [
+            // ─────────────────────────
+            // ADD BUTTON
+            // ─────────────────────────
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton.icon(
+                  icon: const Icon(Icons.add),
+                  label: const Text('Add singles Champion'),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (_) => const AdminDoublesChampionForm(),
+                    );
+                  },
+                ),
               ),
-            );
-          },
+            ),
+
+            // ─────────────────────────
+            // LIST
+            // ─────────────────────────
+            Expanded(
+              child: ListView.separated(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+                itemCount: controller.champions.length,
+                separatorBuilder: (_, __) => const SizedBox(height: 8),
+                itemBuilder: (_, i) {
+                  final e = controller.champions[i];
+
+                  return Card(
+                    elevation: 2,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 10, // 👈 MUCH smaller
+                      ),
+                      child: Row(
+                        children: [
+                          // ─────────────────────────
+                          // INFO
+                          // ─────────────────────────
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '${e.year}  — Div ${e.division}',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.copyWith(fontWeight: FontWeight.bold),
+                                ),
+                                const SizedBox(height: 2),
+                                Text(
+                                  'Winners: ${e.champion1} & ${e.champion2}',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.copyWith(fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  'Runners-up: ${e.runnerUp1} & ${e.runnerUp2}',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.copyWith(fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          // ─────────────────────────
+                          // ACTIONS
+                          // ─────────────────────────
+                          IconButton(
+                            icon: const Icon(Icons.edit, size: 20),
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (_) =>
+                                    AdminDoublesChampionForm(existing: e),
+                              );
+                            },
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.delete, size: 20),
+                            onPressed: () => controller.remove(e),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
         );
       }),
     );

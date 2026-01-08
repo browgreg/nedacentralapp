@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../widgets/admin_scaffold.dart';
+import 'admin_life_member_form.dart';
 import 'admin_life_members_controller.dart';
 
 class AdminLifeMembersScreen extends StatelessWidget {
@@ -13,15 +14,24 @@ class AdminLifeMembersScreen extends StatelessWidget {
 
     return AdminScaffold(
       title: 'Life Members',
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.add),
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (_) => const AdminLifeMemberForm(),
+            );
+          },
+        ),
+      ],
       child: Obx(() {
         if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
         }
 
         if (controller.lifeMembers.isEmpty) {
-          return const Center(
-            child: Text('No life members found'),
-          );
+          return const Center(child: Text('No life members found'));
         }
 
         return ListView.builder(
@@ -35,7 +45,7 @@ class AdminLifeMembersScreen extends StatelessWidget {
               child: ListTile(
                 title: Text(m.name),
                 subtitle: Text('Inducted ${m.inductionYear}'),
-                trailing: const Icon(Icons.lock_outline), // read-only
+                trailing: const Icon(Icons.lock_outline),
               ),
             );
           },

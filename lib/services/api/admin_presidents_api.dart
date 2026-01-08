@@ -3,7 +3,8 @@ import '../http_client.dart';
 
 class AdminPresidentsApi {
   static Future<List<AdminPresidentEntry>> fetch() async {
-    final res = await HttpClient.get('/services/admin/presidents.php');
+    final res =
+        await HttpClient.get('/services/admin/presidents/presidents.php');
 
     if (res == null || res is! List) return [];
 
@@ -14,7 +15,7 @@ class AdminPresidentsApi {
 
   static Future<void> create(AdminPresidentEntry entry) async {
     await HttpClient.post(
-      '/services/admin/president_create.php',
+      '/services/admin/presidents/president_create.php',
       body: entry.toJson(),
     );
   }
@@ -25,7 +26,7 @@ class AdminPresidentsApi {
     }
 
     await HttpClient.post(
-      '/services/admin/president_update.php',
+      '/services/admin/presidents/president_update.php',
       body: entry.toJson(),
     );
   }
@@ -36,7 +37,7 @@ class AdminPresidentsApi {
     }
 
     await HttpClient.post(
-      '/services/admin/president_delete.php',
+      '/services/admin/presidents/president_delete.php',
       body: {'id': entry.id},
     );
   }

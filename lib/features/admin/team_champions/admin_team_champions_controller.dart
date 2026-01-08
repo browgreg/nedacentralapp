@@ -8,29 +8,38 @@ class AdminTeamChampionsController extends GetxController {
   final champions = <AdminTeamChampionEntry>[].obs;
   final isLoading = false.obs;
 
+  @override
+  void onInit() {
+    super.onInit();
+    load();
+  }
+
   Future<void> load() async {
     isLoading.value = true;
-    champions.assignAll(
-      await AdminTeamChampionsApi.fetch(),
-    );
-    isLoading.value = false;
+    try {
+      champions.assignAll(await AdminTeamChampionsApi.fetch());
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   Future<void> add(AdminTeamChampionEntry entry) async {
-    champions.add(entry);
     await AdminTeamChampionsApi.create(entry);
+    await load();
   }
 
-  Future<void> updateEntry(
-    int index,
-    AdminTeamChampionEntry entry,
+  Future<void> updateExisting(
+    AdminTeamChampionEntry oldEntry,
+    AdminTeamChampionEntry updated,
   ) async {
-    champions[index] = entry;
-    await AdminTeamChampionsApi.update(entry);
+    await AdminTeamChampionsApi.update(
+      updated.copyWith(id: oldEntry.id),
+    );
+    await load();
   }
 
   Future<void> remove(AdminTeamChampionEntry entry) async {
-    champions.remove(entry);
     await AdminTeamChampionsApi.delete(entry);
+    champions.remove(entry);
   }
 }

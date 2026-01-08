@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:neda_central/features/admin/doubles_champions/admin_doubles_champions_screen.dart';
+import 'package:neda_central/features/admin/life_members/admin_life_members_screen.dart';
+import 'package:neda_central/features/admin/singles_champions/admin_singles_champions_screen.dart';
+import 'package:neda_central/features/admin/team_champions/admin_team_champions_screen.dart';
 import 'package:neda_central/features/fixtures/view/fixtures_screen.dart';
 import 'package:neda_central/features/honours/view/honours_screen.dart';
 
@@ -40,6 +44,22 @@ class AppPages {
     GetPage(
       name: '/admin/presidents',
       page: () => const AdminPresidentsScreen(),
+    ),
+    GetPage(
+      name: '/admin/lifeMembers',
+      page: () => const AdminLifeMembersScreen(),
+    ),
+    GetPage(
+      name: '/admin/teamsChampions',
+      page: () => const AdminTeamChampionsScreen(),
+    ),
+    GetPage(
+      name: '/admin/singlesChampions',
+      page: () => const AdminSinglesChampionsScreen(),
+    ),
+    GetPage(
+      name: '/admin/doublesChampions',
+      page: () => const AdminDoublesChampionsScreen(),
     ),
   ];
 }

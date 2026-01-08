@@ -44,7 +44,7 @@ class AdminPresidentsController extends GetxController {
   /// Used by Add form lookup
   Future<String> lookupMemberName(int rego) async {
     final res = await HttpClient.post(
-      '/services/admin/member_lookup.php',
+      '/services/admin/presidents/member_lookup.php',
       body: {'rego': rego},
     );
 

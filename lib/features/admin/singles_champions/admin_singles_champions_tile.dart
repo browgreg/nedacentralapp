@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'admin_team_champions_entry.dart';
+import 'admin_singles_champions_entry.dart';
 
-class AdminTeamChampionsTile extends StatelessWidget {
-  final AdminTeamChampionEntry entry;
+class AdminSinglesChampionsTile extends StatelessWidget {
+  final AdminSinglesChampionEntry entry;
 
-  const AdminTeamChampionsTile({
+  const AdminSinglesChampionsTile({
     super.key,
     required this.entry,
   });
@@ -26,7 +26,7 @@ class AdminTeamChampionsTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${entry.year} • ${entry.season}',
+                  entry.year.toString(),
                   style: Theme.of(context).textTheme.labelLarge,
                 ),
                 const SizedBox(height: 4),
@@ -46,7 +46,7 @@ class AdminTeamChampionsTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Winners: ${entry.champion}',
+                    'Winner: ${entry.champion}',
                     style: Theme.of(context)
                         .textTheme
                         .titleMedium
@@ -54,7 +54,7 @@ class AdminTeamChampionsTile extends StatelessWidget {
                   ),
                   const SizedBox(height: 6),
                   Text(
-                    'Runners-up: ${entry.runnerUp}',
+                    'Runner-up: ${entry.runnerUp}',
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],

@@ -1,11 +1,12 @@
-import 'package:get/get.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
-import 'doubles_champion_entry.dart';
-import 'doubles_champions_service.dart';
+import '../../../services/api/admin_doubles_champions_api.dart';
+import 'admin_doubles_champions_entry.dart';
 
 class AdminDoublesChampionsController extends GetxController {
-  final entries = <DoublesChampionEntry>[].obs;
-  final isLoading = true.obs;
+  final champions = <AdminDoublesChampionEntry>[].obs;
+  final isLoading = false.obs;
 
   @override
   void onInit() {
@@ -15,7 +16,30 @@ class AdminDoublesChampionsController extends GetxController {
 
   Future<void> load() async {
     isLoading.value = true;
-    entries.assignAll(await DoublesChampionsService.fetch());
-    isLoading.value = false;
+    try {
+      champions.assignAll(await AdminDoublesChampionsApi.fetch());
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> add(AdminDoublesChampionEntry entry) async {
+    await AdminDoublesChampionsApi.create(entry);
+    await load();
+  }
+
+  Future<void> updateExisting(
+    AdminDoublesChampionEntry oldEntry,
+    AdminDoublesChampionEntry updated,
+  ) async {
+    await AdminDoublesChampionsApi.update(
+      updated.copyWith(id: oldEntry.id),
+    );
+    await load();
+  }
+
+  Future<void> remove(AdminDoublesChampionEntry entry) async {
+    await AdminDoublesChampionsApi.delete(entry);
+    champions.remove(entry);
   }
 }

@@ -1,26 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'admin_team_champions_controller.dart';
-import 'admin_team_champions_entry.dart';
+import 'admin_singles_champions_controller.dart';
+import 'admin_singles_champions_entry.dart';
 
-class AdminTeamChampionForm extends StatefulWidget {
-  final AdminTeamChampionEntry? existing;
+class AdminSinglesChampionForm extends StatefulWidget {
+  final AdminSinglesChampionEntry? existing;
 
-  const AdminTeamChampionForm({super.key, this.existing});
+  const AdminSinglesChampionForm({super.key, this.existing});
 
   @override
-  State<AdminTeamChampionForm> createState() => _AdminTeamChampionFormState();
+  State<AdminSinglesChampionForm> createState() =>
+      _AdminSinglesChampionFormState();
 }
 
-class _AdminTeamChampionFormState extends State<AdminTeamChampionForm> {
+class _AdminSinglesChampionFormState extends State<AdminSinglesChampionForm> {
   final year = TextEditingController();
-  final season = TextEditingController();
   final division = TextEditingController();
   final champion = TextEditingController();
   final runnerUp = TextEditingController();
-  String _season = 'Winter'; // default
-  late final AdminTeamChampionsController controller;
+  late final AdminSinglesChampionsController controller;
   int _division = 1;
 
   @override
@@ -32,14 +31,12 @@ class _AdminTeamChampionFormState extends State<AdminTeamChampionForm> {
       _division = widget.existing!.division;
       champion.text = widget.existing!.champion;
       runnerUp.text = widget.existing!.runnerUp;
-      _season = widget.existing!.season; // 👈 important
     }
   }
 
   void _save() async {
-    final entry = AdminTeamChampionEntry(
+    final entry = AdminSinglesChampionEntry(
       year: int.parse(year.text),
-      season: _season,
       division: _division,
       champion: champion.text,
       runnerUp: runnerUp.text,
@@ -57,35 +54,15 @@ class _AdminTeamChampionFormState extends State<AdminTeamChampionForm> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(
-          widget.existing == null ? 'Add Team Champion' : 'Edit Team Champion'),
+      title: Text(widget.existing == null
+          ? 'Add Singles Champion'
+          : 'Edit Singles Champion'),
       content: SingleChildScrollView(
         child: Column(
           children: [
             TextField(
                 controller: year,
                 decoration: const InputDecoration(labelText: 'Year')),
-            DropdownButtonFormField<String>(
-              initialValue: _season,
-              decoration: const InputDecoration(
-                labelText: 'Season',
-              ),
-              items: const [
-                DropdownMenuItem(
-                  value: 'Summer',
-                  child: Text('Summer'),
-                ),
-                DropdownMenuItem(
-                  value: 'Winter',
-                  child: Text('Winter'),
-                ),
-              ],
-              onChanged: (value) {
-                if (value != null) {
-                  setState(() => _season = value);
-                }
-              },
-            ),
             DropdownButtonFormField<int>(
               initialValue: _division,
               decoration: const InputDecoration(
@@ -105,10 +82,10 @@ class _AdminTeamChampionFormState extends State<AdminTeamChampionForm> {
             ),
             TextField(
                 controller: champion,
-                decoration: const InputDecoration(labelText: 'Champions')),
+                decoration: const InputDecoration(labelText: 'Champion')),
             TextField(
                 controller: runnerUp,
-                decoration: const InputDecoration(labelText: 'Runners-up')),
+                decoration: const InputDecoration(labelText: 'Runner-up')),
           ],
         ),
       ),
