@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../auth/user_role.dart';
 import '../core/config/app_config.dart';
 // ADMIN
 import '../core/widgets/forbidden_screen.dart';
@@ -21,6 +22,7 @@ import '../features/landing/view/landing_screen.dart';
 import '../routes/app_routes.dart';
 // Middlewares (guards)
 import 'middlewares/admin_guard.dart';
+import 'middlewares/base_role_guard.dart';
 import 'middlewares/captain_guard.dart';
 import 'middlewares/committee_guard.dart';
 
@@ -140,8 +142,14 @@ class AppPages {
     // ─────────────────────────
     GetPage(
       name: AppRoutes.adminCommittee,
-      middlewares: [CommitteeGuard()],
-      page: () => const _ComingSoon('Committee Dashboard'),
+      page: () => const CommitteeDashboardScreen(),
+      middlewares: [
+        BaseRoleGuard([
+          UserRole.SUPER_ADMIN,
+          UserRole.ADMIN,
+          UserRole.COMMITTEE,
+        ])
+      ],
     ),
     GetPage(
       name: AppRoutes.adminCommitteeMembers,
