@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../widgets/admin_scaffold.dart';
-import 'admin_doubles_champions_controller.dart';
-import 'admin_doubles_champions_form.dart';
+import 'admin_one_seventy_club_controller.dart';
+import 'admin_one_seventy_club_form.dart';
 
-class AdminDoublesChampionsScreen extends StatelessWidget {
-  const AdminDoublesChampionsScreen({super.key});
+class AdminOneSeventyClubsScreen extends StatelessWidget {
+  const AdminOneSeventyClubsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(AdminDoublesChampionsController());
+    final controller = Get.put(AdminOneSeventyClubsController());
     return AdminScaffold(
       title: 'Doubles Champions',
       child: Obx(() {
@@ -33,7 +33,7 @@ class AdminDoublesChampionsScreen extends StatelessWidget {
                   onPressed: () {
                     showDialog(
                       context: context,
-                      builder: (_) => const AdminDoublesChampionForm(),
+                      builder: (_) => const AdminOneSeventyClubForm(),
                     );
                   },
                 ),
@@ -105,7 +105,7 @@ class AdminDoublesChampionsScreen extends StatelessWidget {
                               showDialog(
                                 context: context,
                                 builder: (_) =>
-                                    AdminDoublesChampionForm(existing: e),
+                                    AdminOneSeventyClubForm(existing: e),
                               );
                             },
                           ),

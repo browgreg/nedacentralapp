@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../widgets/admin_scaffold.dart';
-import 'admin_team_champion_form.dart';
 import 'admin_team_champions_controller.dart';
+import 'admin_team_champions_form.dart';
 
 class AdminTeamChampionsScreen extends StatelessWidget {
   const AdminTeamChampionsScreen({super.key});

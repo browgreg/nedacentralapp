@@ -30,6 +30,7 @@ dependencies:
   analyzer: ^6.4.1
   custom_lint: ^0.6.4
   custom_lint_builder: ^0.6.4
+  font_awesome_flutter: ^10.12.0
 
 
 
