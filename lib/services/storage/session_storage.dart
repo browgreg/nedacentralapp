@@ -1,19 +1,28 @@
+import 'dart:convert';
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import '../../auth/user_session.dart';
+
 class SessionStorage {
-  static final _storage = FlutterSecureStorage();
+  static const _storage = FlutterSecureStorage();
+  static const _key = 'user_session';
 
-  static Future<void> save(Map<String, String> data) async {
-    for (final e in data.entries) {
-      await _storage.write(key: e.key, value: e.value);
-    }
+  static Future<void> write(UserSession session) async {
+    await _storage.write(
+      key: _key,
+      value: jsonEncode(session.toJson()),
+    );
   }
 
-  static Future<String?> read(String key) {
-    return _storage.read(key: key);
+  static Future<UserSession?> read() async {
+    final raw = await _storage.read(key: _key);
+    if (raw == null) return null;
+
+    return UserSession.fromJson(jsonDecode(raw));
   }
 
-  static Future<void> clear() {
-    return _storage.deleteAll();
+  static Future<void> clear() async {
+    await _storage.delete(key: _key);
   }
 }

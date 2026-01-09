@@ -1,24 +1,34 @@
-import 'user_role.dart';
+import 'package:neda_central/auth/user_role.dart';
 
 class UserSession {
-  final int rego;
-  UserRole? role;
   final String token;
+  final int rego;
+  final UserRole role;
   final DateTime expiresAt;
 
   UserSession({
+    required this.token,
     required this.rego,
     required this.role,
-    required this.token,
     required this.expiresAt,
   });
 
   factory UserSession.fromJson(Map<String, dynamic> json) {
     return UserSession(
-      rego: json['rego'],
-      role: UserRole.fromString(json['role']),
       token: json['token'],
+      rego: json['rego'],
+      role: UserRole.values.firstWhere(
+        (r) => r.name == json['role'],
+        orElse: () => UserRole.PLAYER,
+      ),
       expiresAt: DateTime.parse(json['expiresAt']),
     );
   }
+
+  Map<String, dynamic> toJson() => {
+        'token': token,
+        'rego': rego,
+        'role': role.name,
+        'expiresAt': expiresAt.toIso8601String(),
+      };
 }

@@ -15,10 +15,6 @@ class AppRoutes {
   static const playerStats = '/playerStats';
   static const playerScoring = '/playerScoring';
   static const committeeHub = '/committee';
-  static const captainHub = '/captain';
-  static const captainTeams = '/captainTeams';
-  static const captainResults = '/captainResults';
-  static const captainScoring = '/captainScoring';
   static const competitionHub = '/competition';
   static const competitionBrackets = '/competitionBrackets';
   static const competitionRegistration = '/competitionRegistration';
@@ -87,4 +83,14 @@ class AppRoutes {
   // ADMIN → SCORING
   // ─────────────────────────
   static const adminScoring = '/admin/scoring';
+
+  // ─────────────────────────
+  // ADMIN → CAPTAIN
+  // ─────────────────────────
+  static const captainDashboard = '/captain';
+  static const captainTeam = '/captain/team';
+  static const captainResults = '/captain/results';
+  static const captainScoring = '/captain/scoring';
+  static const captainHub = '/captain';
+  static const captainTeams = '/captainTeams';
 }

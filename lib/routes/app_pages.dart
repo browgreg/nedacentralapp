@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../auth/user_role.dart';
-import '../core/config/app_config.dart';
 // ADMIN
 import '../core/widgets/forbidden_screen.dart';
+import '../features/admin/committee/dashboard/committee_permission.dart';
 import '../features/admin/dashboard/admin_dashboard_screen.dart';
 import '../features/admin/doubles_champions/admin_doubles_champions_screen.dart';
 import '../features/admin/life_members/admin_life_members_screen.dart';
@@ -12,19 +11,24 @@ import '../features/admin/one_seventy_club/admin_one_seventy_club_screen.dart';
 import '../features/admin/presidents/admin_presidents_screen.dart';
 import '../features/admin/singles_champions/admin_singles_champions_screen.dart';
 import '../features/admin/team_champions/admin_team_champions_screen.dart';
-import '../features/captain/dashboard/captainscorin.dart';
+import '../features/admin/users/view/admin_users_screen.dart';
+import '../features/captain/dashboard/captain_scoring.dart';
+import '../features/captain/model/captain_permission.dart';
 import '../features/fixtures/view/fixtures_screen.dart';
 import '../features/honours/bindings/honours_binding.dart';
 import '../features/honours/view/honours_screen.dart';
 // PUBLIC
 import '../features/landing/bindings/landing_binding.dart';
 import '../features/landing/view/landing_screen.dart';
+import '../features/player/dashboard/player_dashboard_screen.dart';
+import '../remover.dart';
 import '../routes/app_routes.dart';
 // Middlewares (guards)
 import 'middlewares/admin_guard.dart';
-import 'middlewares/base_role_guard.dart';
 import 'middlewares/captain_guard.dart';
+import 'middlewares/captain_permission_guard.dart';
 import 'middlewares/committee_guard.dart';
+import 'middlewares/committee_permission_guard.dart';
 
 // (Optional placeholders for future)
 class _ComingSoon extends StatelessWidget {
@@ -70,10 +74,8 @@ class AppPages {
     // ─────────────────────────
     GetPage(
       name: AppRoutes.admin,
-      middlewares: [AdminGuard(), CommitteeGuard()],
-      page: () => AppConfig.isDevMode
-          ? const AdminDashboardScreen()
-          : const SizedBox.shrink(),
+      page: () => const AdminDashboardScreen(),
+      middlewares: [AdminGuard()],
     ),
 
     // ADMIN → HONOURS
@@ -107,7 +109,11 @@ class AppPages {
       middlewares: [AdminGuard()],
       page: () => const AdminOneSeventyClubScreen(),
     ),
-
+    GetPage(
+      name: AppRoutes.adminUsers,
+      page: () => const AdminUsersScreen(),
+      middlewares: [AdminGuard()],
+    ),
     // ADMIN → LEAGUE (coming soon)
     GetPage(
       name: AppRoutes.adminLeagues,
@@ -142,11 +148,10 @@ class AppPages {
       name: AppRoutes.adminCommittee,
       page: () => const CommitteeDashboardScreen(),
       middlewares: [
-        BaseRoleGuard([
-          UserRole.SUPER_ADMIN,
-          UserRole.ADMIN,
-          UserRole.COMMITTEE,
-        ])
+        CommitteeGuard(), // role-level
+        CommitteePermissionGuard(
+          CommitteePermission.manageCommittee,
+        ),
       ],
     ),
     GetPage(
@@ -172,19 +177,20 @@ class AppPages {
     // CAPTAIN (guarded)
     // ─────────────────────────
     GetPage(
-      name: AppRoutes.captainHub,
-      middlewares: [CaptainGuard()],
-      page: () => const _ComingSoon('Captain Dashboard'),
+      name: AppRoutes.captainDashboard,
+      page: () => const CaptainDashboardScreen(),
+      middlewares: [
+        CaptainGuard(),
+      ],
     ),
-    GetPage(
-      name: AppRoutes.captainTeams,
-      middlewares: [CaptainGuard()],
-      page: () => const _ComingSoon('Captain • Teams'),
-    ),
+
     GetPage(
       name: AppRoutes.captainResults,
-      middlewares: [CaptainGuard()],
-      page: () => const _ComingSoon('Captain • Results'),
+      page: () => const CaptainResultsScreen(),
+      middlewares: [
+        CaptainGuard(),
+        CaptainPermissionGuard(CaptainPermission.enterResults),
+      ],
     ),
     GetPage(
       name: AppRoutes.captainScoring,
@@ -197,8 +203,9 @@ class AppPages {
     // ─────────────────────────
     GetPage(
       name: AppRoutes.playerHub,
-      page: () => const _ComingSoon('Player Hub'),
+      page: () => const PlayerDashboardScreen(),
     ),
+
     GetPage(
       name: AppRoutes.playerScoring,
       page: () => const _ComingSoon('Player • Scoring'),

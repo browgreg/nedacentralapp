@@ -1,40 +1,30 @@
-import '../../features/admin/users/admin_users_entry.dart';
-import '../http_client.dart';
+import '../../../../auth/user_role.dart';
+import '../../../../services/http_client.dart';
+import '../../features/admin/users/model/admin_users_entry.dart';
 
 class AdminUsersApi {
-  static Future<List<AdminUserEntry>> fetch() async {
-    final res = await HttpClient.get('/services/admin/users/users_list.php');
-    if (res is! List) return [];
-    return res.map((e) => AdminUserEntry.fromJson(e)).toList();
-  }
-
-  static Future<void> create({
-    required int rego,
-    required UserRole role,
-  }) async {
-    await HttpClient.post(
-      '/services/admin/users/users_create.php',
-      body: {
-        'rego': rego,
-        'role': role.name.toUpperCase(),
-      },
-    );
+  static Future<List<AdminUserEntry>> fetchUsers() async {
+    final res = await HttpClient.get('/services/admin/users/list.php');
+    return (res as List).map((e) => AdminUserEntry.fromJson(e)).toList();
   }
 
   static Future<void> updateRole(int id, UserRole role) async {
     await HttpClient.post(
-      '/services/admin/users/users_update.php',
+      '/services/admin/users/update_role.php',
       body: {
         'id': id,
-        'role': role.name.toUpperCase(),
+        'role': role.name,
       },
     );
   }
 
-  static Future<void> toggleActive(int id) async {
+  static Future<void> setActive(int id, bool active) async {
     await HttpClient.post(
-      '/services/admin/users/users_toggle_active.php',
-      body: {'id': id},
+      '/services/admin/users/set_active.php',
+      body: {
+        'id': id,
+        'is_active': active ? 1 : 0,
+      },
     );
   }
 }

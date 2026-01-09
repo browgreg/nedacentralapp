@@ -58,6 +58,11 @@ class AdminDashboardScreen extends StatelessWidget {
                   icon: Icons.groups,
                   route: '/admin/committee/general',
                 ),
+                AdminTile(
+                  title: 'Committee',
+                  icon: Icons.groups,
+                  route: AppRoutes.adminCommittee,
+                ),
               ],
             ),
             const SizedBox(height: 32),

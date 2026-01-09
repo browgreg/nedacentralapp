@@ -5,9 +5,9 @@ import '../../auth/auth_controller.dart';
 import '../../auth/user_role.dart';
 
 class BaseRoleGuard extends GetMiddleware {
-  final List<UserRole> allowedRoles;
+  final List<UserRole> allowed;
 
-  BaseRoleGuard(this.allowedRoles);
+  BaseRoleGuard(this.allowed);
 
   @override
   RouteSettings? redirect(String? route) {
@@ -17,7 +17,7 @@ class BaseRoleGuard extends GetMiddleware {
       return const RouteSettings(name: '/landing');
     }
 
-    if (!allowedRoles.contains(auth.role)) {
+    if (!allowed.contains(auth.role)) {
       return const RouteSettings(name: '/admin');
     }
 

@@ -1,14 +1,14 @@
-class CommitteeMember {
+class CaptainPlayer {
   final int rego;
   final String name;
 
-  const CommitteeMember({
+  CaptainPlayer({
     required this.rego,
     required this.name,
   });
 
-  factory CommitteeMember.fromJson(Map<String, dynamic> json) {
-    return CommitteeMember(
+  factory CaptainPlayer.fromJson(Map<String, dynamic> json) {
+    return CaptainPlayer(
       rego: json['rego'],
       name: json['name'],
     );

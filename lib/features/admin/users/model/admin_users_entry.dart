@@ -1,10 +1,4 @@
-enum UserRole {
-  superAdmin,
-  admin,
-  committee,
-  captain,
-  player,
-}
+import '../../../../auth/user_role.dart';
 
 class AdminUserEntry {
   final int id;
@@ -32,11 +26,4 @@ class AdminUserEntry {
       displayName: json['name'],
     );
   }
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'rego': rego,
-        'role': role.name.toUpperCase(),
-        'is_active': isActive ? 1 : 0,
-      };
 }
