@@ -6,6 +6,7 @@ import '../../widgets/admin_scaffold.dart';
 import '../controller/committee_controller.dart';
 import '../model/committee_role.dart';
 import '../view/committee_role_tile.dart';
+import 'committee_assign_member_dialog.dart';
 
 class CommitteeDashboardScreen extends StatelessWidget {
   const CommitteeDashboardScreen({super.key});
@@ -33,7 +34,13 @@ class CommitteeDashboardScreen extends StatelessWidget {
                         role: role,
                         member: controller.members[role],
                         onTap: () {
-                          // TODO: open assign dialog
+                          showDialog(
+                            context: context,
+                            builder: (_) => CommitteeAssignMemberDialog(
+                              role: role,
+                              existing: controller.members[role],
+                            ),
+                          );
                         },
                       ),
                     );

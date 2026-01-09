@@ -4,8 +4,8 @@ import 'base_role_guard.dart';
 class CommitteeGuard extends BaseRoleGuard {
   CommitteeGuard()
       : super([
-          UserRole.COMMITTEE,
-          UserRole.ADMIN,
           UserRole.SUPER_ADMIN,
+          UserRole.ADMIN,
+          UserRole.COMMITTEE,
         ]);
 }

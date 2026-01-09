@@ -70,9 +70,7 @@ class AppPages {
     // ─────────────────────────
     GetPage(
       name: AppRoutes.admin,
-      middlewares: [
-        AdminGuard(),
-      ],
+      middlewares: [AdminGuard(), CommitteeGuard()],
       page: () => AppConfig.isDevMode
           ? const AdminDashboardScreen()
           : const SizedBox.shrink(),
@@ -81,7 +79,7 @@ class AppPages {
     // ADMIN → HONOURS
     GetPage(
       name: AppRoutes.adminPresidents,
-      middlewares: [AdminGuard()],
+      middlewares: [AdminGuard(), CommitteeGuard()],
       page: () => const AdminPresidentsScreen(),
     ),
     GetPage(
@@ -113,7 +111,7 @@ class AppPages {
     // ADMIN → LEAGUE (coming soon)
     GetPage(
       name: AppRoutes.adminLeagues,
-      middlewares: [AdminGuard()],
+      middlewares: [AdminGuard(), CommitteeGuard()],
       page: () => const _ComingSoon('Admin • Leagues'),
     ),
     GetPage(

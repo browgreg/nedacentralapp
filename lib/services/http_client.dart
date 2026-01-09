@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
+import '../auth/auth_controller.dart';
 import '../core/config/api_config.dart';
 
 class HttpClient {
@@ -15,13 +17,7 @@ class HttpClient {
 
     final response = await http.get(uri, headers: _headers()).timeout(_timeout);
 
-    // debugPrint(uri.toString());
-    // debugPrint('STATUS: ${response.statusCode}');
-    // debugPrint('HEADERS: ${response.headers}');
-    // debugPrint('BODY RAW: ${response.body}');
-
     _validate(response);
-
     return jsonDecode(response.body);
   }
 
@@ -43,17 +39,31 @@ class HttpClient {
         .timeout(_timeout);
 
     _validate(response);
-
     return jsonDecode(response.body);
   }
 
   // ─────────────────────────
-  // HEADERS
+  // HEADERS (AUTH-AWARE)
   // ─────────────────────────
-  static Map<String, String> _headers() => {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      };
+  static Map<String, String> _headers() {
+    final headers = <String, String>{
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    };
+
+    try {
+      final auth = Get.find<AuthController>();
+      final token = auth.session?.token;
+
+      if (token != null && token.isNotEmpty) {
+        headers['Authorization'] = 'Bearer $token';
+      }
+    } catch (_) {
+      // AuthController not available yet (startup / public routes)
+    }
+
+    return headers;
+  }
 
   // ─────────────────────────
   // ERROR HANDLING
@@ -81,7 +91,5 @@ class HttpException implements Exception {
   });
 
   @override
-  String toString() => 'HTTP $statusCode\n$responseBody';
-
-  String get responseBody => body;
+  String toString() => 'HTTP $statusCode\n$body';
 }

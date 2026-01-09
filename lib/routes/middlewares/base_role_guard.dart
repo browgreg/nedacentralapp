@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import '../../auth/auth_controller.dart';
@@ -17,7 +17,7 @@ class BaseRoleGuard extends GetMiddleware {
       return const RouteSettings(name: '/landing');
     }
 
-    if (!auth.hasRole(allowedRoles)) {
+    if (!allowedRoles.contains(auth.role)) {
       return const RouteSettings(name: '/admin');
     }
 

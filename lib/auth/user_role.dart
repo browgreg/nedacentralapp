@@ -3,5 +3,13 @@ enum UserRole {
   ADMIN,
   COMMITTEE,
   CAPTAIN,
-  PLAYER,
+  PLAYER;
+
+  static UserRole? fromString(String? v) {
+    if (v == null) return null;
+    return UserRole.values.firstWhere(
+      (e) => e.name == v,
+      orElse: () => UserRole.PLAYER,
+    );
+  }
 }

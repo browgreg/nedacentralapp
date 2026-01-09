@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../model/committee_member.dart';
 import '../model/committee_role.dart';
 
 class CommitteeRoleTile extends StatelessWidget {
   final CommitteeRole role;
-  final String? member;
+  final CommitteeMember? member; // ✅ FIXED
   final VoidCallback onTap;
 
   const CommitteeRoleTile({
@@ -19,7 +20,9 @@ class CommitteeRoleTile extends StatelessWidget {
     return Card(
       child: ListTile(
         title: Text(role.label),
-        subtitle: Text(member ?? 'Unassigned'),
+        subtitle: Text(
+          member == null ? 'Unassigned' : '${member!.rego}  •  ${member!.name}',
+        ),
         trailing: const Icon(Icons.edit),
         onTap: onTap,
       ),
