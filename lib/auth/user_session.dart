@@ -4,12 +4,14 @@ class UserSession {
   final String token;
   final int rego;
   final UserRole role;
+  final bool mustChangePin;
   final DateTime expiresAt;
 
   UserSession({
     required this.token,
     required this.rego,
     required this.role,
+    required this.mustChangePin,
     required this.expiresAt,
   });
 
@@ -17,11 +19,9 @@ class UserSession {
     return UserSession(
       token: json['token'],
       rego: json['rego'],
-      role: UserRole.values.firstWhere(
-        (r) => r.name == json['role'],
-        orElse: () => UserRole.PLAYER,
-      ),
-      expiresAt: DateTime.parse(json['expiresAt']),
+      role: UserRole.fromName(json['role']),
+      mustChangePin: json['must_change_pin'] == 1,
+      expiresAt: DateTime.parse(json['expires_at']),
     );
   }
 
@@ -29,6 +29,17 @@ class UserSession {
         'token': token,
         'rego': rego,
         'role': role.name,
-        'expiresAt': expiresAt.toIso8601String(),
+        'must_change_pin': mustChangePin ? 1 : 0,
+        'expires_at': expiresAt.toIso8601String(),
       };
+
+  UserSession copyWith({bool? mustChangePin}) {
+    return UserSession(
+      token: token,
+      rego: rego,
+      role: role,
+      mustChangePin: mustChangePin ?? this.mustChangePin,
+      expiresAt: expiresAt,
+    );
+  }
 }

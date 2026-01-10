@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../dashboard/widgets/section_header.dart';
 import '../../widgets/admin_scaffold.dart';
 import '../controller/admin_users_controller.dart';
-import '../widgets/admin_users_tile.dart';
+import '../widgets/reset_pin_dialog.dart';
 
 class AdminUsersScreen extends StatelessWidget {
   const AdminUsersScreen({super.key});
@@ -20,19 +19,34 @@ class AdminUsersScreen extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
 
-        return ListView(
-          padding: const EdgeInsets.all(16),
-          children: [
-            const SectionHeader(title: 'Registered Users'),
-            const SizedBox(height: 12),
-            ...controller.users.map(
-              (u) => AdminUserTile(
-                user: u,
-                onRoleChanged: (r) => controller.updateRole(u.id, r),
-                onActiveChanged: (v) => controller.toggleActive(u.id, v),
+        return ListView.builder(
+          itemCount: controller.users.length,
+          itemBuilder: (context, index) {
+            final user = controller.users[index]; // ✅ user exists here
+
+            return ListTile(
+              title: Text('Rego ${user.rego}'),
+              subtitle: Text(user.role.name),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.lock_reset),
+                    tooltip: 'Reset PIN',
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (_) => ResetPinDialog(
+                          userId: user.id, // ✅ VALID
+                          rego: user.rego, // ✅ VALID
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
-            ),
-          ],
+            );
+          },
         );
       }),
     );

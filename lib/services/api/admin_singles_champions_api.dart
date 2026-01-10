@@ -1,4 +1,4 @@
-import '../../features/admin/singles_champions/admin_singles_champions_entry.dart';
+import '../../features/admin/singles_champions/model/admin_singles_champions_entry.dart';
 import '../http_client.dart';
 
 class AdminSinglesChampionsApi {

@@ -1,4 +1,4 @@
-import '../../features/admin/one_seventy_club/admin_one_seventy_club_entry.dart';
+import '../../features/admin/one_seventy_club/model/admin_one_seventy_club_entry.dart';
 import '../http_client.dart';
 
 class AdminOneSeventyClubApi {

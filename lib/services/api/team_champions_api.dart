@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-import '../../features/admin/team_champions/admin_team_champions_entry.dart';
+import '../../features/admin/team_champions/model/admin_team_champions_entry.dart';
 import '../../features/honours/team_champions/teams_champion_entry.dart';
 import '../http_client.dart';
 

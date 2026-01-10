@@ -2,33 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 // ADMIN
+import '../auth/view/change_pin_screen.dart';
+import '../auth/view/login_screen.dart';
 import '../core/widgets/forbidden_screen.dart';
-import '../features/admin/committee/dashboard/committee_permission.dart';
 import '../features/admin/dashboard/admin_dashboard_screen.dart';
-import '../features/admin/doubles_champions/admin_doubles_champions_screen.dart';
-import '../features/admin/life_members/admin_life_members_screen.dart';
-import '../features/admin/one_seventy_club/admin_one_seventy_club_screen.dart';
-import '../features/admin/presidents/admin_presidents_screen.dart';
-import '../features/admin/singles_champions/admin_singles_champions_screen.dart';
-import '../features/admin/team_champions/admin_team_champions_screen.dart';
+import '../features/admin/doubles_champions/view/admin_doubles_champions_screen.dart';
+import '../features/admin/life_members/view/admin_life_members_screen.dart';
+import '../features/admin/one_seventy_club/view/admin_one_seventy_club_screen.dart';
+import '../features/admin/presidents/view/admin_presidents_screen.dart';
+import '../features/admin/singles_champions/view/admin_singles_champions_screen.dart';
+import '../features/admin/team_champions/view/admin_team_champions_screen.dart';
 import '../features/admin/users/view/admin_users_screen.dart';
+import '../features/captain/dashboard/captain_dashboard_screen.dart';
 import '../features/captain/dashboard/captain_scoring.dart';
 import '../features/captain/model/captain_permission.dart';
 import '../features/fixtures/view/fixtures_screen.dart';
 import '../features/honours/bindings/honours_binding.dart';
 import '../features/honours/view/honours_screen.dart';
+
 // PUBLIC
 import '../features/landing/bindings/landing_binding.dart';
-import '../features/landing/view/landing_screen.dart';
 import '../features/player/dashboard/player_dashboard_screen.dart';
 import '../remover.dart';
 import '../routes/app_routes.dart';
+
 // Middlewares (guards)
 import 'middlewares/admin_guard.dart';
 import 'middlewares/captain_guard.dart';
 import 'middlewares/captain_permission_guard.dart';
 import 'middlewares/committee_guard.dart';
-import 'middlewares/committee_permission_guard.dart';
 
 // (Optional placeholders for future)
 class _ComingSoon extends StatelessWidget {
@@ -52,7 +54,7 @@ class AppPages {
     // ─────────────────────────
     GetPage(
       name: AppRoutes.landing,
-      page: () => const LandingScreen(),
+      page: () => const LoginScreen(),
       binding: LandingBinding(),
     ),
     GetPage(
@@ -69,6 +71,15 @@ class AppPages {
       page: () => const FullResultsScreen(),
     ),
 
+    GetPage(
+      name: AppRoutes.login,
+      page: () => const LoginScreen(),
+    ),
+
+    GetPage(
+      name: '/changePin',
+      page: () => const ChangePinScreen(),
+    ),
     // ─────────────────────────
     // ADMIN (guarded)
     // ─────────────────────────
@@ -147,12 +158,7 @@ class AppPages {
     GetPage(
       name: AppRoutes.adminCommittee,
       page: () => const CommitteeDashboardScreen(),
-      middlewares: [
-        CommitteeGuard(), // role-level
-        CommitteePermissionGuard(
-          CommitteePermission.manageCommittee,
-        ),
-      ],
+      middlewares: [CommitteeGuard()],
     ),
     GetPage(
       name: AppRoutes.adminCommitteeMembers,

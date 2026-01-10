@@ -2,6 +2,8 @@ class AppRoutes {
   // ─────────────────────────
   // PUBLIC
   // ─────────────────────────
+  static const login = '/login';
+  static const changePin = '/change-pin';
   static const landing = '/landing';
   static const honours = '/honours';
   static const fixtures = '/fixtures';

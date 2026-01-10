@@ -34,15 +34,9 @@ class CaptainTeamScreen extends StatelessWidget {
                   color: Colors.red.withAlpha(38),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: const Row(
-                  children: [
-                    Icon(Icons.lock, color: Colors.red),
-                    SizedBox(width: 8),
-                    Text(
-                      'Team locked – changes disabled',
-                      style: TextStyle(fontWeight: FontWeight.w600),
-                    ),
-                  ],
+                child: const Text(
+                  '🔒 Team selection is locked by admin',
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
             Text(

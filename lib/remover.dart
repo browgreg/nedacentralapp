@@ -8,12 +8,3 @@ class CaptainResultsScreen extends StatelessWidget {
     return const Placeholder();
   }
 }
-
-class CaptainDashboardScreen extends StatelessWidget {
-  const CaptainDashboardScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
-}

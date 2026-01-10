@@ -12,7 +12,9 @@ class BaseRoleGuard extends GetMiddleware {
   @override
   RouteSettings? redirect(String? route) {
     final auth = Get.find<AuthController>();
-
+    if (auth.mustChangePin && route != '/change-pin') {
+      return const RouteSettings(name: '/change-pin');
+    }
     if (!auth.isLoggedIn) {
       return const RouteSettings(name: '/landing');
     }

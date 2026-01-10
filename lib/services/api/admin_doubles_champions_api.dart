@@ -1,4 +1,4 @@
-import '../../features/admin/doubles_champions/admin_doubles_champions_entry.dart';
+import '../../features/admin/doubles_champions/model/admin_doubles_champions_entry.dart';
 import '../http_client.dart';
 
 class AdminDoublesChampionsApi {

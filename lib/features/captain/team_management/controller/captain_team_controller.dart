@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../../api/captain_team_api.dart';
+import '../../../../services/api/captain_team_api.dart';
 import '../../model/captain_player.dart';
 import '../../model/captain_team.dart';
 

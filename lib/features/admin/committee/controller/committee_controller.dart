@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 
 import '../../../../auth/auth_controller.dart';
 import '../../../../services/api/member_lookup_api.dart';
-import '../api/committee_api.dart';
+import '../../../../services/api/committee_api.dart';
 import '../dashboard/committee_permission.dart';
 import '../model/committee_member.dart';
 import '../model/committee_role.dart';
@@ -72,12 +72,11 @@ class CommitteeController extends GetxController {
   }
 
   // ─────────────────────────
-  // CURRENT USER COMMITTEE ROLE
+  // CURRENT USER COMMITTEE ROLE (COMPUTED)
   // ─────────────────────────
   CommitteeRole? get currentCommitteeRole {
     final auth = Get.find<AuthController>();
     final rego = auth.session?.rego;
-
     if (rego == null) return null;
 
     for (final entry in members.entries) {

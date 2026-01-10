@@ -1,8 +1,9 @@
 enum CommitteePermission {
   manageCommittee,
-  manageUsers,
-  manageFinances,
-  manageLeague,
-  manageWebsite,
-  publishResults,
+  publishContent,
+  lockTeams,
+  enterResults,
+  viewFinancials,
+  manageNoticeboard,
+  viewCommittee,
 }

@@ -1,26 +1,25 @@
 import '../dashboard/committee_permission.dart';
 import '../model/committee_role.dart';
 
-const Map<CommitteeRole, Set<CommitteePermission>> committeePermissions = {
+const committeePermissions = {
   CommitteeRole.president: {
     CommitteePermission.manageCommittee,
-    CommitteePermission.manageUsers,
-    CommitteePermission.manageLeague,
-    CommitteePermission.manageWebsite,
-    CommitteePermission.manageFinances,
+    CommitteePermission.publishContent,
+    CommitteePermission.lockTeams,
+    CommitteePermission.enterResults,
   },
   CommitteeRole.secretary: {
-    CommitteePermission.manageCommittee,
-    CommitteePermission.manageWebsite,
+    CommitteePermission.publishContent,
+    CommitteePermission.manageNoticeboard,
   },
   CommitteeRole.treasurer: {
-    CommitteePermission.manageFinances,
+    CommitteePermission.viewFinancials,
   },
   CommitteeRole.matchSecretary: {
-    CommitteePermission.manageLeague,
-    CommitteePermission.publishResults,
+    CommitteePermission.lockTeams,
+    CommitteePermission.enterResults,
   },
   CommitteeRole.general: {
-    CommitteePermission.manageWebsite,
+    CommitteePermission.viewCommittee,
   },
 };

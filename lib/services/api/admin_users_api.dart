@@ -18,6 +18,31 @@ class AdminUsersApi {
     );
   }
 
+  static Future<void> create({
+    required int rego,
+    required UserRole role,
+    required String pin,
+  }) async {
+    await HttpClient.post(
+      '/services/admin/users/create.php',
+      body: {
+        'rego': rego,
+        'role': role.name,
+        'pin': pin,
+      },
+    );
+  }
+
+  static Future<void> resetPin(int userId, String pin) async {
+    await HttpClient.post(
+      '/services/admin/users/reset_pin.php',
+      body: {
+        'id': userId,
+        'pin': pin,
+      },
+    );
+  }
+
   static Future<void> setActive(int id, bool active) async {
     await HttpClient.post(
       '/services/admin/users/set_active.php',

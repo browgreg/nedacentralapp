@@ -1,4 +1,4 @@
-import '../../features/admin/life_members/admin_life_member_entry.dart';
+import '../../features/admin/life_members/model/admin_life_member_entry.dart';
 import '../http_client.dart';
 
 class AdminLifeMembersApi {

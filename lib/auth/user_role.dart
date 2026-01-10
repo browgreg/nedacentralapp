@@ -3,18 +3,15 @@ enum UserRole {
   ADMIN,
   COMMITTEE,
   CAPTAIN,
-  PLAYER,
-}
+  PLAYER;
 
-extension UserRoleX on UserRole {
-  static UserRole fromString(String value) {
+  /// Convert API string → enum
+  static UserRole fromName(String value) {
     return UserRole.values.firstWhere(
       (r) => r.name == value,
-      orElse: () => UserRole.PLAYER,
+      orElse: () {
+        throw Exception('Unknown UserRole: $value');
+      },
     );
   }
-
-  bool get isAdmin => this == UserRole.SUPER_ADMIN || this == UserRole.ADMIN;
-
-  bool get isCommittee => isAdmin || this == UserRole.COMMITTEE;
 }

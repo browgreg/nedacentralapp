@@ -1,4 +1,4 @@
-import '../../features/admin/presidents/admin_presidents_entry.dart';
+import '../../features/admin/presidents/model/admin_presidents_entry.dart';
 import '../http_client.dart';
 
 class AdminPresidentsApi {

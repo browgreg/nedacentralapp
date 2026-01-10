@@ -1,7 +1,9 @@
 import 'package:get/get.dart';
-import 'package:neda_central/auth/user_role.dart';
 
+import '../routes/app_routes.dart';
+import '../services/api/auth_api.dart';
 import '../services/storage/session_storage.dart';
+import 'user_role.dart';
 import 'user_session.dart';
 
 class AuthController extends GetxController {
@@ -11,7 +13,9 @@ class AuthController extends GetxController {
 
   bool get isLoggedIn => _session.value != null;
 
-  UserRole get role => _session.value?.role ?? UserRole.PLAYER;
+  UserRole? get role => _session.value?.role;
+
+  bool get mustChangePin => _session.value?.mustChangePin ?? false;
 
   @override
   void onInit() {
@@ -19,16 +23,47 @@ class AuthController extends GetxController {
     _restoreSession();
   }
 
-  Future<void> _restoreSession() async {
-    final saved = await SessionStorage.read();
-    if (saved != null) {
-      _session.value = saved;
+  Future<void> login(int rego, String pin) async {
+    final res = await AuthApi.login(rego: rego, pin: pin);
+
+    final session = UserSession.fromJson(res);
+
+    _session.value = session;
+    await SessionStorage.write(session);
+
+    if (session.mustChangePin) {
+      Get.offAllNamed('/change-pin');
+    } else {
+      Get.offAllNamed(AppRoutes.admin);
     }
   }
 
+  Future<void> _restoreSession() async {
+    final restored = await SessionStorage.read();
+    _session.value = restored;
+
+    if (restored == null) return;
+
+    if (restored.mustChangePin) {
+      Get.offAllNamed('/change-pin');
+    } else {
+      Get.offAllNamed(AppRoutes.admin);
+    }
+  }
+
+  Future<void> changePin(String pin) async {
+    await AuthApi.changePin(pin);
+
+    final updated = session!.copyWith(mustChangePin: false);
+    _session.value = updated;
+    await SessionStorage.write(updated);
+
+    Get.offAllNamed(AppRoutes.admin);
+  }
+
   Future<void> logout() async {
-    await SessionStorage.clear();
     _session.value = null;
+    await SessionStorage.clear();
     Get.offAllNamed('/landing');
   }
 }

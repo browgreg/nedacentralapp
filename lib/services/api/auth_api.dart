@@ -1,4 +1,4 @@
-import '../http_client.dart';
+import '../../services/http_client.dart';
 
 class AuthApi {
   static Future<Map<String, dynamic>> login({
@@ -6,11 +6,18 @@ class AuthApi {
     required String pin,
   }) async {
     return await HttpClient.post(
-      '/auth/login.php',
+      '/services/auth/login.php',
       body: {
         'rego': rego,
         'pin': pin,
       },
+    );
+  }
+
+  static Future<void> changePin(String pin) async {
+    await HttpClient.post(
+      '/services/auth/change_pin.php',
+      body: {'pin': pin},
     );
   }
 }

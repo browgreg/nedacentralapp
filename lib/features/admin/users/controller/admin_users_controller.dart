@@ -23,9 +23,27 @@ class AdminUsersController extends GetxController {
     }
   }
 
+  Future<void> addUser(int rego, UserRole role, String pin) async {
+    isLoading.value = true;
+    try {
+      await AdminUsersApi.create(
+        rego: rego,
+        role: role,
+        pin: pin,
+      );
+      await loadUsers();
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
   Future<void> updateRole(int userId, UserRole role) async {
     await AdminUsersApi.updateRole(userId, role);
     await loadUsers();
+  }
+
+  Future<void> resetPin(int userId, String pin) async {
+    await AdminUsersApi.resetPin(userId, pin);
   }
 
   Future<void> toggleActive(int userId, bool active) async {

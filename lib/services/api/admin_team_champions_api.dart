@@ -1,4 +1,4 @@
-import '../../features/admin/team_champions/admin_team_champions_entry.dart';
+import '../../features/admin/team_champions/model/admin_team_champions_entry.dart';
 import '../http_client.dart';
 
 class AdminTeamChampionsApi {
