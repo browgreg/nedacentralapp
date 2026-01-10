@@ -31,18 +31,18 @@ class CaptainResultsController extends GetxController {
 
   /// Save results
   Future<void> save() async {
-    if (isSaving.value) return;
+    if (isLocked.value || isSaving.value) return;
     if (home.value == null || away.value == null) return;
 
     isSaving.value = true;
     try {
       await CaptainResultsApi.save(
         fixtureId: fixtureId,
-        homeScore: home.value!,
-        awayScore: away.value!,
+        home: home.value!,
+        away: away.value!,
       );
 
-      Get.snackbar('Saved', 'Results submitted');
+      isLocked.value = true; // 🔒 UI locks immediately
     } finally {
       isSaving.value = false;
     }

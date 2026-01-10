@@ -1,39 +1,65 @@
 import 'package:get/get.dart';
 
-import '../../../../auth/auth_controller.dart';
-import '../../../../auth/user_role.dart';
 import '../../../../services/api/admin_results_api.dart';
+import '../../../../services/api/admin_results_list_api.dart';
 import '../model/result_entry.dart';
 
 class AdminResultsController extends GetxController {
   final results = <ResultEntry>[].obs;
   final isLoading = false.obs;
 
-  bool get canUnlock {
-    final auth = Get.find<AuthController>();
-    final role = auth.role;
-    return role == UserRole.SUPER_ADMIN || role == UserRole.ADMIN;
-  }
-
   @override
   void onInit() {
     super.onInit();
-    reload();
+    fetch();
   }
 
-  Future<void> reload() async {
+  // ─────────────────────────
+  // LOAD RESULTS LIST
+  // ─────────────────────────
+  Future<void> fetch() async {
+    if (isLoading.value) return;
+
     try {
       isLoading.value = true;
-      final data =
-          await AdminResultsApi.list(); // must return List<ResultEntry>
+      final data = await AdminResultsListApi.fetch();
       results.assignAll(data);
     } finally {
       isLoading.value = false;
     }
   }
 
-  Future<void> unlockFixture(int fixtureId) async {
-    await AdminResultsApi.unlock(fixtureId);
-    await reload();
+  // ─────────────────────────
+  // ADMIN UNLOCK (WITH REASON)
+  // ─────────────────────────
+  Future<void> unlock({
+    required int fixtureId,
+    required String reason,
+  }) async {
+    final trimmed = reason.trim();
+    if (trimmed.isEmpty) {
+      Get.snackbar('Required', 'Please provide a reason');
+      return;
+    }
+
+    if (isLoading.value) return;
+
+    try {
+      isLoading.value = true;
+
+      await AdminResultsApi.unlock(fixtureId);
+
+      // refresh results after unlock
+      final refreshed = await AdminResultsListApi.fetch();
+      results.assignAll(refreshed);
+    } catch (_) {
+      Get.snackbar(
+        'Error',
+        'Unable to unlock fixture',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    } finally {
+      isLoading.value = false;
+    }
   }
 }

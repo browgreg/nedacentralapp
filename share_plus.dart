@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:neda_central/features/landing/model/poster.dart';
 import 'package:share_plus/share_plus.dart';
 

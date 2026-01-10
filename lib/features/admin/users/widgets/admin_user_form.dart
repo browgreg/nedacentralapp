@@ -68,7 +68,7 @@ class _AdminUserFormState extends State<AdminUserForm> {
           ),
           const SizedBox(height: 12),
           DropdownButtonFormField<UserRole>(
-            value: role,
+            initialValue: role,
             items: UserRole.values
                 .map(
                   (r) => DropdownMenuItem(

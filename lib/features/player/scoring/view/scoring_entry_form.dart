@@ -27,7 +27,7 @@ class _ScoringEntryFormState extends State<ScoringEntryForm> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         DropdownButtonFormField<ScoringGameType>(
-          value: gameType,
+          initialValue: gameType,
           decoration: const InputDecoration(labelText: 'Game Type'),
           items: ScoringGameType.values
               .map(

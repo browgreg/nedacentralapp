@@ -30,7 +30,7 @@ class NedaApp extends StatelessWidget {
       title: 'NEDA Central',
       debugShowCheckedModeBanner: false,
       initialBinding: AppBindings(),
-      initialRoute: AppRoutes.login,
+      initialRoute: _initialRoute(),
       getPages: AppPages.pages,
       builder: (context, child) {
         if (!AppConfig.isDevMode) return child!;
